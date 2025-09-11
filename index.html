@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="auto">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arthur • GitHub Portfolio</title>
+  <meta name="description" content="Site do Arthur Ronaldo no GitHub — projetos, roadmap e contatos." />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">☕</text></svg>'/>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Arthur • GitHub Portfolio" />
+  <meta property="og:description" content="Java, Spring Boot, MySQL — projetos, roadmap e contatos." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root{
+      --bg:#0b0f14; --panel:#0f141b; --text:#e5e7eb; --muted:#9aa4b2; --brand:#60a5fa; --brand2:#3b82f6; --ok:#22c55e; --warn:#f59e0b;
+      --border:#1f2937; --radius:18px; --shadow:0 12px 30px rgba(0,0,0,.35); --maxw:1120px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#ffffff; --panel:#f6f7f9; --text:#0f172a; --muted:#64748b; --brand:#2563eb; --brand2:#1d4ed8; --border:#e5e7eb; --shadow:0 12px 30px rgba(0,0,0,.08) }
+    }
+    html[data-theme="light"]{ --bg:#ffffff; --panel:#f6f7f9; --text:#0f172a; --muted:#64748b; --brand:#2563eb; --brand2:#1d4ed8; --border:#e5e7eb; --shadow:0 12px 30px rgba(0,0,0,.08) }
+    html[data-theme="dark"]{ --bg:#0b0f14; --panel:#0f141b; --text:#e5e7eb; --muted:#9aa4b2; --brand:#60a5fa; --brand2:#3b82f6; --border:#1f2937; --shadow:0 12px 30px rgba(0,0,0,.35) }
+
+    *{box-sizing:border-box}
+    body{margin:0; font-family: ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial; background:var(--bg); color:var(--text); line-height:1.6}
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+    .btn{display:inline-flex; align-items:center; gap:.5rem; background:var(--brand); color:#fff; padding:.75rem 1.1rem; border-radius:999px; border:0; box-shadow:var(--shadow); cursor:pointer}
+    .btn:hover{background:var(--brand2)}
+    .btn.ghost{background:transparent; color:var(--brand); border:1px solid var(--brand)}
+    .tag{display:inline-flex; align-items:center; gap:.4rem; padding:.25rem .6rem; border:1px solid var(--border); border-radius:999px; color:var(--muted); background:color-mix(in oklab, var(--brand) 6%, var(--bg))}
+    .card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow)}
+    .grid{display:grid; gap:1rem}
+    .cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}
+    .col-12{grid-column:span 12} .col-8{grid-column:span 8} .col-6{grid-column:span 6} .col-4{grid-column:span 4}
+    @media (max-width: 990px){ .col-8,.col-6,.col-4{grid-column:span 12} }
+
+    header{position:sticky; top:0; z-index:20; backdrop-filter:saturate(180%) blur(8px); background:color-mix(in oklab, var(--bg) 90%, transparent); border-bottom:1px solid var(--border)}
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:.8rem 0}
+    .brand{display:flex; align-items:center; gap:.6rem; font-weight:700}
+    .brand .logo{font-size:1.3rem}
+    .menu{display:flex; gap:.8rem; flex-wrap:wrap; align-items:center}
+    .menu a{padding:.45rem .7rem; border-radius:10px}
+    .menu a.active, .menu a:hover{background:var(--panel); text-decoration:none; border:1px solid var(--border)}
+
+    .hero{padding:52px 0 28px}
+    .hero .inner{display:grid; gap:1rem; grid-template-columns: 1.2fr 1fr}
+    .hero h1{margin:0 0 .3rem; font-size:clamp(1.8rem, 2.6vw + 1rem, 3rem); line-height:1.15}
+    .hero p{margin:.4rem 0 1rem; color:var(--muted)}
+    .panel{padding:1.2rem}
+
+    .stats{display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.6rem}
+    .stat{display:flex; gap:.4rem; align-items:center; padding:.45rem .6rem; border:1px solid var(--border); border-radius:10px; background:var(--panel); color:var(--muted)}
+
+    .sec{padding:44px 0}
+    .sec h2{margin:0 0 .5rem; font-size:1.6rem}
+    .repo-grid{display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:1rem}
+    .repo-card{grid-column:span 4; display:flex; flex-direction:column; min-height:210px; padding:1rem}
+    .repo-card h3{margin:.1rem 0 .2rem; font-size:1.1rem}
+    .repo-card p{margin:.2rem 0 .6rem; color:var(--muted)}
+    .repo-meta{margin-top:auto; display:flex; gap:.45rem; flex-wrap:wrap}
+    @media (max-width: 1100px){ .repo-card{grid-column:span 6} }
+    @media (max-width: 720px){ .repo-card{grid-column:span 12} }
+
+    .searchbar{display:flex; gap:.5rem; align-items:center; margin:.5rem 0 1rem}
+    .searchbar input{
+      width:100%; padding:.85rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--bg); color:var(--text)
+    }
+
+    footer{border-top:1px solid var(--border); padding:34px 0; color:var(--muted); font-size:.95rem}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#conteudo" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">Pular para o conteúdo</a>
+
+  <header>
+    <div class="wrap nav" role="navigation" aria-label="Principal">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">☕</span>
+        <span>Arthur • GitHub</span>
+      </div>
+      <nav class="menu">
+        <a href="#inicio" class="active">Início</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <div>
+        <button id="themeBtn" class="btn ghost" aria-label="Alternar tema">🌓 Tema</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" class="wrap">
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+      <div class="inner">
+        <div>
+          <h1>Arthur Ronaldo — Java & Spring Boot • MySQL</h1>
+          <p><strong>Desenvolvedor em formação rumo ao Full Stack.</strong> No momento estudando <u>POO em Java</u> e construindo projetos práticos.</p>
+          <div style="display:flex; gap:.6rem; flex-wrap:wrap;">
+            <a class="btn" href="https://github.com/arthurronaldodasilvaa-commits" target="_blank" rel="noopener">⭐ Ver meu GitHub</a>
+            <a class="btn ghost" href="#projetos">Ver Projetos</a>
+          </div>
+          <div class="stats">
+            <span class="stat" id="stat-repos">📦 Repositórios: —</span>
+            <span class="stat" id="stat-followers">👥 Seguidores: —</span>
+            <span class="stat" id="stat-location">📍 Blumenau/SC</span>
+            <span class="stat">🎯 Foco: Java • Spring Boot • MySQL</span>
+          </div>
+        </div>
+        <aside class="card panel">
+          <strong style="display:block;margin-bottom:.4rem">Sobre</strong>
+          <p class="muted" style="margin:.2rem 0 1rem">
+            “Commit by commit, project by project”. Aqui você encontra meu roadmap, projetos e formas de contato.
+          </p>
+          <div style="display:flex; gap:.6rem; flex-wrap:wrap;">
+            <a class="btn" href="#roadmap">Abrir Roadmap</a>
+            <a class="btn ghost" href="#contato">Falar comigo</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PROJETOS -->
+    <section id="projetos" class="sec">
+      <h2>🏆 Projetos</h2>
+      <p class="muted">Destaques + últimos repositórios atualizados. Você pode buscar pelo nome/descrição.</p>
+
+      <div class="searchbar">
+        <input id="search" placeholder="🔎 Buscar repositórios..." aria-label="Buscar repositórios" />
+        <button id="clearSearch" class="btn ghost" title="Limpar busca">Limpar</button>
+      </div>
+
+      <div id="repos" class="repo-grid"></div>
+      <p id="reposEmpty" class="muted" style="display:none;margin-top:.6rem">Nada encontrado. Tente outro termo.</p>
+
+      <div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap">
+        <a class="btn ghost" target="_blank" rel="noopener" href="https://github.com/arthurronaldodasilvaa-commits?tab=repositories">Ver todos no GitHub →</a>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section id="roadmap" class="sec">
+      <div class="card panel">
+        <h2 style="margin-top:0">🗺️ Roadmap Pessoal</h2>
+        <p class="muted">Checklist em Markdown com metas e etapas (Java, Spring Boot, MySQL e front básico).</p>
+        <div style="display:flex; gap:.6rem; flex-wrap:wrap;">
+          <a class="btn" href="https://github.com/arthurronaldodasilvaa-commits/roadmap-pessoal" target="_blank" rel="noopener">Acessar Roadmap</a>
+          <span class="tag">Markdown limpo</span>
+          <span class="tag">Atualizado por commits</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" class="sec">
+      <h2>📞 Contato</h2>
+      <div class="grid cols-12">
+        <div class="card panel col-6">
+          <strong style="display:block;margin-bottom:.3rem">Canais</strong>
+          <div style="display:flex; gap:.6rem; flex-wrap:wrap;">
+            <a class="btn" href="mailto:arthurronaldodasilvaa@gmail.com">✉️ Email</a>
+            <a class="btn ghost" href="https://www.linkedin.com/in/arthur-ronaldo-051772383/" target="_blank" rel="noopener">in/arthur-ronaldo</a>
+            <a class="btn ghost" href="https://github.com/arthurronaldodasilvaa-commits" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+        <div class="card panel col-6">
+          <strong style="display:block;margin-bottom:.3rem">Clone rápido</strong>
+          <p class="muted" style="margin-top:.2rem">Copie o comando para clonar seu perfil (ex.: página pessoal).</p>
+          <div style="display:flex; gap:.5rem; flex-wrap:wrap;">
+            <code id="cloneCmd" style="padding:.6rem .8rem; border:1px solid var(--border); border-radius:10px; background:var(--panel); display:inline-block">git clone https://github.com/arthurronaldodasilvaa-commits/roadmap-pessoal</code>
+            <button id="copyBtn" class="btn ghost" title="Copiar comando">📋 Copiar</button>
+          </div>
+          <small id="copyMsg" class="muted"></small>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+      <div>© <span id="year"></span> • Arthur Ronaldo</div>
+      <div class="muted">Feito com HTML + CSS + JS • Hospedado no GitHub Pages</div>
+    </div>
+  </footer>
+
+  <script>
+    // ---------- Config ----------
+    const USER = "arthurronaldodasilvaa-commits";
+    // destaque primeiro estes repositórios (se existirem), na ordem:
+    const PINNED = [
+      "java-basico-cursoemvideo",
+      "java-poo-cursoemvideo",
+      "projeto-site",
+      "roadmap-pessoal",
+      "dev-resource-hub"
+    ];
+    const MAX_SHOW = 9;
+
+    // ---------- Util ----------
+    const $ = (s, r=document)=>r.querySelector(s);
+    const $$ = (s, r=document)=>[...r.querySelectorAll(s)];
+    const fmtDate = (iso)=> new Intl.DateTimeFormat('pt-BR',{dateStyle:'medium'}).format(new Date(iso));
+
+    // ---------- Tema ----------
+    (function initTheme(){
+      const saved = localStorage.getItem("theme") || "auto";
+      document.documentElement.setAttribute("data-theme", saved);
+      const btn = $("#themeBtn");
+      const label = ()=> btn.innerText = `🌓 Tema (${document.documentElement.getAttribute('data-theme')})`;
+      label();
+      btn.addEventListener("click", ()=>{
+        const cur = document.documentElement.getAttribute("data-theme");
+        const next = cur==="light" ? "dark" : cur==="dark" ? "auto" : "light";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+        label();
+      });
+    })();
+
+    // ---------- Footer year ----------
+    $("#year").textContent = new Date().getFullYear();
+
+    // ---------- Copy clone cmd ----------
+    $("#copyBtn").addEventListener("click", async ()=>{
+      try{
+        await navigator.clipboard.writeText($("#cloneCmd").textContent.trim());
+        $("#copyMsg").textContent = "Comando copiado!";
+        setTimeout(()=> $("#copyMsg").textContent="", 1800);
+      }catch(e){ $("#copyMsg").textContent = "Não foi possível copiar :(" }
+    });
+
+    // ---------- GitHub API ----------
+    async function fetchJSON(url){
+      const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" }});
+      if(!res.ok) throw new Error(res.status + " " + res.statusText);
+      return res.json();
+    }
+
+    function repoCard(repo){
+      const card = document.createElement("article");
+      card.className = "card repo-card";
+      card.innerHTML = `
+        <h3><a href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a></h3>
+        <p>${repo.description ? repo.description.replace(/</g,"&lt;") : "Sem descrição."}</p>
+        <div class="repo-meta">
+          <span class="tag">★ ${repo.stargazers_count}</span>
+          <span class="tag">⬆ ${fmtDate(repo.pushed_at)}</span>
+          ${repo.language ? `<span class="tag">${repo.language}</span>` : ""}
+          ${repo.archived ? `<span class="tag">Arquivado</span>` : ""}
+        </div>
+      `;
+      return card;
+    }
+
+    function sortRepos(repos){
+      // prioriza PINNED na ordem dada; depois, por atualização
+      const map = new Map(repos.map(r => [r.name, r]));
+      const pinned = PINNED.map(n => map.get(n)).filter(Boolean);
+      const rest = repos
+        .filter(r => !PINNED.includes(r.name))
+        .sort((a,b)=> new Date(b.pushed_at) - new Date(a.pushed_at));
+      return [...pinned, ...rest];
+    }
+
+    async function load(){
+      try{
+        // user stats
+        const user = await fetchJSON(`https://api.github.com/users/${USER}`);
+        $("#stat-repos").textContent = `📦 Repositórios: ${user.public_repos}`;
+        $("#stat-followers").textContent = `👥 Seguidores: ${user.followers}`;
+
+        // repos
+        let repos = await fetchJSON(`https://api.github.com/users/${USER}/repos?per_page=100&sort=updated`);
+        repos = repos.filter(r => !r.fork); // esconde forks
+        repos = sortRepos(repos).slice(0, MAX_SHOW);
+
+        const root = $("#repos");
+        root.innerHTML = "";
+        repos.forEach(r => root.appendChild(repoCard(r)));
+
+        // busca
+        const search = $("#search"), empty = $("#reposEmpty");
+        const allCards = () => $$(".repo-card", root);
+        const titles = () => $$(".repo-card h3 a", root).map(a=>a.textContent.toLowerCase());
+        const descs = () => $$(".repo-card p", root).map(p=>p.textContent.toLowerCase());
+
+        function applyFilter(q){
+          const term = q.trim().toLowerCase();
+          let visible = 0;
+          allCards().forEach((card, i)=>{
+            const ok = !term ||
+              titles()[i].includes(term) ||
+              descs()[i].includes(term);
+            card.style.display = ok ? "" : "none";
+            if(ok) visible++;
+          });
+          empty.style.display = visible ? "none" : "block";
+        }
+        search.addEventListener("input", ()=> applyFilter(search.value));
+        $("#clearSearch").addEventListener("click", ()=>{ search.value=""; applyFilter(""); });
+      }catch(err){
+        console.error(err);
+        $("#repos").innerHTML = `<div class="card panel"><strong>Não foi possível carregar os repositórios agora.</strong><br/><span class="muted">Tente novamente em alguns minutos.</span></div>`;
+      }
+    }
+    load();
+
+    // ---------- Nav active on scroll ----------
+    const links = [...document.querySelectorAll('.menu a')];
+    const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        const id = '#' + entry.target.id;
+        const link = links.find(a=>a.getAttribute('href')===id);
+        if(link){
+          if(entry.isIntersecting){
+            links.forEach(l=>l.classList.remove('active'));
+            link.classList.add('active');
+          }
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach(s=> obs.observe(s));
+  </script>
+</body>
+</html>
