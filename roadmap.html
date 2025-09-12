@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="auto">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Roadmap • Plano de Estudos</title>
+  <meta name="description" content="Roadmap pessoal de estudos, carregado automaticamente do README do repositório de roadmap." />
+  <!-- Se seu site usa um CSS global, mantenha o mesmo caminho do index.html -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- Markdown to HTML -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    /* Estilização leve de Markdown caso seu CSS não cubra tudo */
+    .markdown { line-height: 1.7; }
+    .markdown h1, .markdown h2, .markdown h3 { margin-top: 1.2em }
+    .markdown pre { padding: 1rem; border: 1px solid #e5e7eb; border-radius: 10px; overflow:auto }
+    .markdown code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace }
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+    .hero { padding: 40px 0 16px }
+    .muted { opacity: .8 }
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">☕</text></svg>'/>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Arthur • GitHub Portfolio" />
+  <meta property="og:description" content="Java, Spring Boot, MySQL — projetos, roadmap e contatos." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root{
+      --bg:#0b0f14; --panel:#0f141b; --text:#e5e7eb; --muted:#9aa4b2; --brand:#60a5fa; --brand2:#3b82f6; --ok:#22c55e; --warn:#f59e0b;
+      --border:#1f2937; --radius:18px; --shadow:0 12px 30px rgba(0,0,0,.35); --maxw:1120px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#ffffff; --panel:#f6f7f9; --text:#0f172a; --muted:#64748b; --brand:#2563eb; --brand2:#1d4ed8; --border:#e5e7eb; --shadow:0 12px 30px rgba(0,0,0,.08) }
+    }
+    html[data-theme="light"]{ --bg:#ffffff; --panel:#f6f7f9; --text:#0f172a; --muted:#64748b; --brand:#2563eb; --brand2:#1d4ed8; --border:#e5e7eb; --shadow:0 12px 30px rgba(0,0,0,.08) }
+    html[data-theme="dark"]{ --bg:#0b0f14; --panel:#0f141b; --text:#e5e7eb; --muted:#9aa4b2; --brand:#60a5fa; --brand2:#3b82f6; --border:#1f2937; --shadow:0 12px 30px rgba(0,0,0,.35) }
+
+    *{box-sizing:border-box}
+    body{margin:0; font-family: ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial; background:var(--bg); color:var(--text); line-height:1.6}
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+    .btn{display:inline-flex; align-items:center; gap:.5rem; background:var(--brand); color:#fff; padding:.75rem 1.1rem; border-radius:999px; border:0; box-shadow:var(--shadow); cursor:pointer}
+    .btn:hover{background:var(--brand2)}
+    .btn.ghost{background:transparent; color:var(--brand); border:1px solid var(--brand)}
+    .tag{display:inline-flex; align-items:center; gap:.4rem; padding:.25rem .6rem; border:1px solid var(--border); border-radius:999px; color:var(--muted); background:color-mix(in oklab, var(--brand) 6%, var(--bg))}
+    .card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow)}
+    .grid{display:grid; gap:1rem}
+    .cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}
+    .col-12{grid-column:span 12} .col-8{grid-column:span 8} .col-6{grid-column:span 6} .col-4{grid-column:span 4}
+    @media (max-width: 990px){ .col-8,.col-6,.col-4{grid-column:span 12} }
+
+    header{position:sticky; top:0; z-index:20; backdrop-filter:saturate(180%) blur(8px); background:color-mix(in oklab, var(--bg) 90%, transparent); border-bottom:1px solid var(--border)}
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:.8rem 0}
+    .brand{display:flex; align-items:center; gap:.6rem; font-weight:700}
+    .brand .logo{font-size:1.3rem}
+    .menu{display:flex; gap:.8rem; flex-wrap:wrap; align-items:center}
+    .menu a{padding:.45rem .7rem; border-radius:10px}
+    .menu a.active, .menu a:hover{background:var(--panel); text-decoration:none; border:1px solid var(--border)}
+
+    .hero{padding:52px 0 28px}
+    .hero .inner{display:grid; gap:1rem; grid-template-columns: 1.2fr 1fr}
+    .hero h1{margin:0 0 .3rem; font-size:clamp(1.8rem, 2.6vw + 1rem, 3rem); line-height:1.15}
+    .hero p{margin:.4rem 0 1rem; color:var(--muted)}
+    .panel{padding:1.2rem}
+
+    .stats{display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.6rem}
+    .stat{display:flex; gap:.4rem; align-items:center; padding:.45rem .6rem; border:1px solid var(--border); border-radius:10px; background:var(--panel); color:var(--muted)}
+
+    .sec{padding:44px 0}
+    .sec h2{margin:0 0 .5rem; font-size:1.6rem}
+    .repo-grid{display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:1rem}
+    .repo-card{grid-column:span 4; display:flex; flex-direction:column; min-height:210px; padding:1rem}
+    .repo-card h3{margin:.1rem 0 .2rem; font-size:1.1rem}
+    .repo-card p{margin:.2rem 0 .6rem; color:var(--muted)}
+    .repo-meta{margin-top:auto; display:flex; gap:.45rem; flex-wrap:wrap}
+    @media (max-width: 1100px){ .repo-card{grid-column:span 6} }
+    @media (max-width: 720px){ .repo-card{grid-column:span 12} }
+
+    .searchbar{display:flex; gap:.5rem; align-items:center; margin:.5rem 0 1rem}
+    .searchbar input{
+      width:100%; padding:.85rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--bg); color:var(--text)
+    }
+
+    footer{border-top:1px solid var(--border); padding:34px 0; color:var(--muted); font-size:.95rem}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+
+  <!-- ===== COPIE do seu index.html: cabeçalho inteiro (header/nav) ===== -->
+  <!-- Exemplo/placeholder (troque pelo seu header real): -->
+  <header>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #e5e7eb">
+      <strong>Seu Site</strong>
+      <nav style="display:flex;gap:.8rem">
+        <a href="index.html">Início</a>
+        <a href="roadmap.html" aria-current="page"><b>Roadmap</b></a>
+      </nav>
+    </div>
+  </header>
+  <!-- ===== FIM: cabeçalho ===== -->
+
+  <main class="container hero">
+    <h1>Roadmap de Estudos</h1>
+    <p class="muted">Conteúdo abaixo é carregado do README do repositório de roadmap.</p>
+
+    <section id="mdWrap" class="markdown">Carregando roadmap…</section>
+
+    <section id="fallback" class="markdown" style="display:none">
+      <hr>
+      <h2>Roadmap (conteúdo manual)</h2>
+      <p>Se preferir, você pode manter um conteúdo manual aqui em HTML/CSS. Basta editar o arquivo <code>roadmap.html</code> e escrever seu plano de estudos.</p>
+    </section>
+  </main>
+
+  <!-- ===== COPIE do seu index.html: rodapé inteiro ===== -->
+  <!-- Exemplo/placeholder (troque pelo seu footer real): -->
+  <footer>
+    <div class="wrap" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+      <div>© <span id="year"></span> • Arthur Ronaldo</div>
+      <div class="muted">Feito com HTML + CSS + JS • Hospedado no GitHub Pages</div>
+    </div>
+  </footer>
+  <!-- ===== FIM: rodapé ===== -->
+
+  <script>
+    // Atualiza ano do rodapé (se quiser)
+    const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+
+    // ========= CONFIGURE AQUI O SEU REPO DO ROADMAP =========
+    const GH_USER  = 'arthurronaldodasilvaa-commits';  // TODO: seu usuário
+    const GH_REPO  = 'roadmap-pessoal';                 // TODO: nome do repo de roadmap
+    const BRANCH   = 'main';                            // TODO: branch (geralmente 'main' ou 'master')
+    const FILE     = 'README.md'; // caminho do arquivo (pode ser pasta/README.md)
+
+    // Bases para resolver links e imagens relativos
+    const RAW_BASE = `https://raw.githubusercontent.com/${GH_USER}/${GH_REPO}/${BRANCH}/`;
+    const WEB_BASE = `https://github.com/${GH_USER}/${GH_REPO}/blob/${BRANCH}/`;
+    const RAW_URL  = RAW_BASE + FILE;
+
+    // Util: checa se url é relativa (sem http/https/mailto/tel/# e não começa com '/')
+    const isRelative = (u) => !!u && !/^(https?:|mailto:|tel:|#)/i.test(u) && !u.startsWith('/');
+
+    async function loadMarkdown() {
+      try {
+        const res = await fetch(RAW_URL, { cache: 'no-cache' });
+        if (!res.ok) throw new Error('Falha ao carregar README do roadmap');
+        const md = await res.text();
+        const html = marked.parse(md);
+        const wrap = document.getElementById('mdWrap');
+        wrap.innerHTML = html;
+
+        // Ajuste de links/figuras relativos do README
+        wrap.querySelectorAll('img').forEach(img => {
+          const src = img.getAttribute('src');
+          if (isRelative(src)) img.src = RAW_BASE + src;
+        });
+        wrap.querySelectorAll('a').forEach(a => {
+          const href = a.getAttribute('href');
+          if (isRelative(href)) a.href = WEB_BASE + href;
+          a.target = '_blank'; a.rel = 'noopener';
+        });
+      } catch (e) {
+        console.error(e);
+        document.getElementById('mdWrap').innerHTML = '<p>Não foi possível carregar o README automaticamente.</p>';
+        document.getElementById('fallback').style.display = 'block';
+      }
+    }
+    loadMarkdown();
+  </script>
+</body>
+</html>
