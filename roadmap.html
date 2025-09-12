@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="auto">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Roadmap • Plano de Estudos</title>
+  <meta name="description" content="Roadmap pessoal de estudos, carregado automaticamente do README do repositório de roadmap." />
+  <!-- Se seu site usa um CSS global, mantenha o mesmo caminho do index.html -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- Markdown to HTML -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    /* Estilização leve de Markdown caso seu CSS não cubra tudo */
+    .markdown { line-height: 1.7; }
+    .markdown h1, .markdown h2, .markdown h3 { margin-top: 1.2em }
+    .markdown pre { padding: 1rem; border: 1px solid #e5e7eb; border-radius: 10px; overflow:auto }
+    .markdown code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace }
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+    .hero { padding: 40px 0 16px }
+    .muted { opacity: .8 }
+  </style>
+</head>
+<body>
+
+  <!-- ===== COPIE do seu index.html: cabeçalho inteiro (header/nav) ===== -->
+  <!-- Exemplo/placeholder (troque pelo seu header real): -->
+  <header>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #e5e7eb">
+      <strong>Seu Site</strong>
+      <nav style="display:flex;gap:.8rem">
+        <a href="index.html">Início</a>
+        <a href="roadmap.html" aria-current="page"><b>Roadmap</b></a>
+      </nav>
+    </div>
+  </header>
+  <!-- ===== FIM: cabeçalho ===== -->
+
+  <main class="container hero">
+    <h1>Roadmap de Estudos</h1>
+    <p class="muted">Conteúdo abaixo é carregado do README do repositório de roadmap.</p>
+
+    <section id="mdWrap" class="markdown">Carregando roadmap…</section>
+
+    <section id="fallback" class="markdown" style="display:none">
+      <hr>
+      <h2>Roadmap (conteúdo manual)</h2>
+      <p>Se preferir, você pode manter um conteúdo manual aqui em HTML/CSS. Basta editar o arquivo <code>roadmap.html</code> e escrever seu plano de estudos.</p>
+    </section>
+  </main>
+
+  <!-- ===== COPIE do seu index.html: rodapé inteiro ===== -->
+  <!-- Exemplo/placeholder (troque pelo seu footer real): -->
+  <footer>
+    <div class="container" style="border-top:1px solid #e5e7eb;padding:24px 0;opacity:.8">
+      © <span id="year"></span> • Seu Nome
+    </div>
+  </footer>
+  <!-- ===== FIM: rodapé ===== -->
+
+  <script>
+    // Atualiza ano do rodapé (se quiser)
+    const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+
+    // ========= CONFIGURE AQUI O SEU REPO DO ROADMAP =========
+    const GH_USER  = 'arthurronaldodasilvaa-commits';  // TODO: seu usuário
+    const GH_REPO  = 'roadmap-pessoal';                 // TODO: nome do repo de roadmap
+    const BRANCH   = 'main';                            // TODO: branch (geralmente 'main' ou 'master')
+    const FILE     = 'README.md'; // caminho do arquivo (pode ser pasta/README.md)
+
+    // Bases para resolver links e imagens relativos
+    const RAW_BASE = `https://raw.githubusercontent.com/${GH_USER}/${GH_REPO}/${BRANCH}/`;
+    const WEB_BASE = `https://github.com/${GH_USER}/${GH_REPO}/blob/${BRANCH}/`;
+    const RAW_URL  = RAW_BASE + FILE;
+
+    // Util: checa se url é relativa (sem http/https/mailto/tel/# e não começa com '/')
+    const isRelative = (u) => !!u && !/^(https?:|mailto:|tel:|#)/i.test(u) && !u.startsWith('/');
+
+    async function loadMarkdown() {
+      try {
+        const res = await fetch(RAW_URL, { cache: 'no-cache' });
+        if (!res.ok) throw new Error('Falha ao carregar README do roadmap');
+        const md = await res.text();
+        const html = marked.parse(md);
+        const wrap = document.getElementById('mdWrap');
+        wrap.innerHTML = html;
+
+        // Ajuste de links/figuras relativos do README
+        wrap.querySelectorAll('img').forEach(img => {
+          const src = img.getAttribute('src');
+          if (isRelative(src)) img.src = RAW_BASE + src;
+        });
+        wrap.querySelectorAll('a').forEach(a => {
+          const href = a.getAttribute('href');
+          if (isRelative(href)) a.href = WEB_BASE + href;
+          a.target = '_blank'; a.rel = 'noopener';
+        });
+      } catch (e) {
+        console.error(e);
+        document.getElementById('mdWrap').innerHTML = '<p>Não foi possível carregar o README automaticamente.</p>';
+        document.getElementById('fallback').style.display = 'block';
+      }
+    }
+    loadMarkdown();
+  </script>
+</body>
+</html>
