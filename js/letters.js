@@ -398,38 +398,10 @@ document.getElementById('modal-write').addEventListener('click', e => {
   if (e.target === document.getElementById('modal-write')) closeWrite();
 });
 
-/* ── Debug temporário ────────────────────────────── */
-async function debugInfo() {
-  const el = document.createElement('div');
-  el.style.cssText = [
-    'position:fixed', 'bottom:0', 'left:0', 'right:0',
-    'background:rgba(0,0,0,.92)', 'color:#7fff7f',
-    'font:12px/1.5 monospace', 'padding:10px 14px',
-    'z-index:9999', 'white-space:pre-wrap',
-    'max-height:45vh', 'overflow-y:auto',
-  ].join(';');
-  document.body.appendChild(el);
-
-  el.textContent =
-    `USE_FIREBASE: ${USE_FIREBASE}\n` +
-    `FB_URL: ${FB_URL}\n` +
-    `typeof CONFIG: ${typeof window.CONFIG}\n`;
-
-  try {
-    el.textContent += 'Fazendo fetch...\n';
-    const r    = await fetch(FB_URL + '.json');
-    const text = await r.text();
-    el.textContent += `HTTP ${r.status}\nResposta: ${text.slice(0, 300)}`;
-  } catch(e) {
-    el.textContent += `ERRO no fetch: ${e.message}`;
-  }
-}
-
 /* ── Init ────────────────────────────────────────── */
 document.body.style.opacity = '0';
 
 window.addEventListener('load', async () => {
-  await debugInfo();
   allLetters = await storageGet();
   renderAll();
   showStorageIndicator();
