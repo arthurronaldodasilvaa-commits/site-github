@@ -409,7 +409,13 @@ async function debugInfo() {
   ].join(';');
   document.body.appendChild(el);
 
-  el.textContent = `USE_FIREBASE: ${USE_FIREBASE}\nFB_URL: ${FB_URL}\n`;
+  const cfgType    = typeof window.CONFIG;
+  const cfgUrl     = (window.CONFIG && window.CONFIG.firebaseUrl) || '(vazio/undefined)';
+  el.textContent   =
+    `USE_FIREBASE: ${USE_FIREBASE}\n` +
+    `FB_URL: ${FB_URL}\n` +
+    `typeof CONFIG: ${cfgType}\n` +
+    `CONFIG.firebaseUrl: "${cfgUrl}"\n`;
 
   if (!USE_FIREBASE) {
     el.textContent += 'Firebase NÃO configurado → usando localStorage\n';
