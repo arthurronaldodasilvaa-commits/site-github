@@ -38,7 +38,7 @@ const CONFIG = {
     {
       title:  'Campari',
       artist: 'yunk vino',
-      link:   '#',
+      link:   'playlist.html?song=1',
       emoji:  '🍹',
     },
     {
@@ -50,7 +50,7 @@ const CONFIG = {
     {
       title:  'Baby Cê é Gata',
       artist: 'Kyan, Mu540',
-      link:   '#',
+      link:   'playlist.html?song=2',
       emoji:  '🔥',
     },
   ],

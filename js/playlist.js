@@ -239,7 +239,12 @@ audioEl.addEventListener('ended', () => {
 document.body.style.opacity = '0';
 
 window.addEventListener('load', () => {
-  loadSong(0);
+  // Suporta ?song=N para abrir direto numa música específica
+  const params   = new URLSearchParams(window.location.search);
+  const startIdx = Math.max(0, Math.min(SONGS.length - 1,
+    parseInt(params.get('song') || '0', 10)
+  ));
+  loadSong(startIdx);
 
   document.body.style.transition = 'opacity .6s ease';
   document.body.style.opacity    = '1';

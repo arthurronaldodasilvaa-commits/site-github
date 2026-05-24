@@ -14,15 +14,27 @@ const USE_FIREBASE = !!(window.CONFIG && CONFIG.firebaseUrl && CONFIG.firebaseUr
 const LS_KEY       = 'shawty_letters_v2';
 const FB_URL       = USE_FIREBASE ? CONFIG.firebaseUrl.replace(/\/$/, '') + '/letters' : null;
 
+let fbError = null; // guarda mensagem de erro do Firebase (null = sem erro)
+
+/* ── storageGet ──────────────────────────────────── */
 async function storageGet() {
   if (USE_FIREBASE) {
     try {
       const r    = await fetch(FB_URL + '.json');
       const data = await r.json();
+
+      // Firebase retorna { "error": "..." } quando as regras bloqueiam acesso
+      if (data && data.error) {
+        fbError = 'Regras bloqueadas no Firebase. Vá em: Firebase Console → Realtime Database → Rules e mude ".read" e ".write" para true.';
+        return { mariToArthur: {}, arthurToMari: {} };
+      }
+
+      fbError = null;
       return data && typeof data === 'object'
         ? data
         : { mariToArthur: {}, arthurToMari: {} };
-    } catch {
+    } catch (e) {
+      fbError = 'Sem conexão com Firebase: ' + e.message;
       return { mariToArthur: {}, arthurToMari: {} };
     }
   }
@@ -32,13 +44,19 @@ async function storageGet() {
   } catch { return { mariToArthur: {}, arthurToMari: {} }; }
 }
 
+/* ── storageAdd ──────────────────────────────────── */
 async function storageAdd(envelope, letter) {
   if (USE_FIREBASE) {
-    await fetch(`${FB_URL}/${envelope}.json`, {
+    const r = await fetch(`${FB_URL}/${envelope}.json`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(letter),
     });
+    // Verifica se Firebase aceitou (200-299)
+    if (!r.ok) {
+      const err = await r.json().catch(() => ({}));
+      throw new Error(err.error || 'Erro Firebase ' + r.status);
+    }
   } else {
     const d = await storageGet();
     if (!d[envelope]) d[envelope] = {};
@@ -47,6 +65,7 @@ async function storageAdd(envelope, letter) {
   }
 }
 
+/* ── storageDelete ───────────────────────────────── */
 async function storageDelete(envelope, key) {
   if (USE_FIREBASE) {
     await fetch(`${FB_URL}/${envelope}/${key}.json`, { method: 'DELETE' });
@@ -80,6 +99,36 @@ function esc(str) {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
+}
+
+/* ── Sync automático ─────────────────────────────── */
+async function syncNow(silent = false) {
+  if (!USE_FIREBASE) return;
+  if (!silent) updateSyncIndicator('syncing');
+  allLetters = await storageGet();
+  renderAll();
+  updateSyncIndicator(fbError ? 'error' : 'ok');
+}
+
+function updateSyncIndicator(state) {
+  const el = document.getElementById('storage-indicator');
+  if (!el || !USE_FIREBASE) return;
+
+  const now = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+  if (state === 'syncing') {
+    el.textContent = '↺ sincronizando...';
+    el.className   = 'storage-ind storage-firebase';
+    el.title       = '';
+  } else if (state === 'error') {
+    el.textContent = '⚠️ sem acesso';
+    el.className   = 'storage-ind storage-error';
+    el.title       = fbError || 'Erro Firebase';
+  } else {
+    el.textContent = `☁️ ${now}`;
+    el.className   = 'storage-ind storage-firebase';
+    el.title       = 'Toque para sincronizar agora';
+  }
 }
 
 /* ── Renderizar envelopes ─────────────────────────── */
@@ -200,9 +249,15 @@ async function saveLetter() {
     await storageAdd(envelope, letter);
     allLetters = await storageGet();
     renderAll();
+    if (USE_FIREBASE) updateSyncIndicator(fbError ? 'error' : 'ok');
     closeWrite();
   } catch (e) {
-    alert('Erro ao salvar. Tente novamente.');
+    const msg = USE_FIREBASE
+      ? 'Erro ao salvar no Firebase.\n\n' +
+        'Verifique as regras em:\nFirebase Console → Realtime Database → Rules\n' +
+        'e mude ".read" e ".write" para true.\n\nDetalhe: ' + e.message
+      : 'Erro ao salvar. Tente novamente.';
+    alert(msg);
     console.error(e);
   }
 
@@ -215,9 +270,9 @@ function showStorageIndicator() {
   const el = document.getElementById('storage-indicator');
   if (!el) return;
   if (USE_FIREBASE) {
-    el.textContent = '☁️ sincronizado';
-    el.className   = 'storage-ind storage-firebase';
-    el.title       = 'As cartas sincronizam entre os dois celulares via Firebase';
+    el.style.cursor = 'pointer';
+    el.onclick      = () => syncNow();
+    updateSyncIndicator(fbError ? 'error' : 'ok');
   } else {
     el.textContent = '💾 só neste celular';
     el.className   = 'storage-ind storage-local';
@@ -245,6 +300,16 @@ window.addEventListener('load', async () => {
   allLetters = await storageGet();
   renderAll();
   showStorageIndicator();
+
+  if (USE_FIREBASE) {
+    // Sincroniza a cada 30 segundos automaticamente
+    setInterval(() => syncNow(true), 30000);
+
+    // Sincroniza ao voltar para a aba (ex: Mari abre o site e Arthur já escreveu)
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) syncNow(true);
+    });
+  }
 
   document.body.style.transition = 'opacity .6s ease';
   document.body.style.opacity    = '1';

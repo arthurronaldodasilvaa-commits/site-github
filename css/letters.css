@@ -97,6 +97,18 @@ body {
   border: 1px solid rgba(255,200,100,.2);
 }
 
+.storage-error {
+  background: rgba(255,80,80,.12);
+  color: rgba(255,120,120,.9);
+  border: 1px solid rgba(255,80,80,.25);
+  animation: pulse-error 2s ease-in-out infinite;
+}
+
+@keyframes pulse-error {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .6; }
+}
+
 /* ── Main ────────────────────────────────────────── */
 .letters-main {
   position: relative;
