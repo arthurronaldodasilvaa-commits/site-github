@@ -43,9 +43,9 @@ body {
   width: 340px;
   height: 340px;
   background: url('../assets/imagens/nossas-fotos/flor-magica.jpeg') center/cover no-repeat;
-  opacity: .09;
+  opacity: .14;
   border-radius: 50%;
-  filter: blur(2px);
+  filter: blur(1px);
 }
 
 /* ── Header ──────────────────────────────────────── */
