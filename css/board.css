@@ -300,6 +300,15 @@ body {
 @media (max-width: 768px) {
   body { overflow-y: auto; }
 
+  /* Sobe o título para ficar claramente acima dos cards */
+  .board-header {
+    top: 10px;
+  }
+
+  .board-header h1 {
+    font-size: 1.1rem;
+  }
+
   .board {
     position: static;
     height: auto;
@@ -307,7 +316,7 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    padding: 80px 16px 50px;
+    padding: 90px 16px 50px;
     align-items: start;
     justify-items: center;
   }
