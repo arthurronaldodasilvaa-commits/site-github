@@ -47,15 +47,29 @@ async function storageGet() {
 /* ── storageAdd ──────────────────────────────────── */
 async function storageAdd(envelope, letter) {
   if (USE_FIREBASE) {
-    const r = await fetch(`${FB_URL}/${envelope}.json`, {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(letter),
-    });
-    // Verifica se Firebase aceitou (200-299)
-    if (!r.ok) {
-      const err = await r.json().catch(() => ({}));
-      throw new Error(err.error || 'Erro Firebase ' + r.status);
+    try {
+      const r = await fetch(`${FB_URL}/${envelope}.json`, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(letter),
+      });
+      const data = await r.json();
+      // Firebase bloqueado → cai no localStorage como fallback
+      if (!r.ok || (data && data.error)) {
+        fbError = data?.error || 'Erro Firebase ' + r.status;
+        throw new Error(fbError);
+      }
+      fbError = null;
+      return; // sucesso no Firebase
+    } catch (e) {
+      fbError = fbError || e.message;
+      // Fallback: salva localmente para não perder a carta
+      const d = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+      if (!d[envelope]) d[envelope] = {};
+      d[envelope][Date.now()] = { ...letter, _pendingSync: true };
+      localStorage.setItem(LS_KEY, JSON.stringify(d));
+      // Re-lança para o saveLetter mostrar aviso ao usuário
+      throw e;
     }
   } else {
     const d = await storageGet();
@@ -247,17 +261,24 @@ async function saveLetter() {
 
   try {
     await storageAdd(envelope, letter);
+    // Firebase OK: lê de lá
     allLetters = await storageGet();
     renderAll();
     if (USE_FIREBASE) updateSyncIndicator(fbError ? 'error' : 'ok');
     closeWrite();
   } catch (e) {
-    const msg = USE_FIREBASE
-      ? 'Erro ao salvar no Firebase.\n\n' +
-        'Verifique as regras em:\nFirebase Console → Realtime Database → Rules\n' +
-        'e mude ".read" e ".write" para true.\n\nDetalhe: ' + e.message
-      : 'Erro ao salvar. Tente novamente.';
-    alert(msg);
+    if (USE_FIREBASE) {
+      // Carta já foi salva no localStorage como fallback — exibe ela na tela
+      const local = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+      allLetters  = local;
+      renderAll();
+      updateSyncIndicator('error');
+      closeWrite();
+      // Toast discreto em vez de alert bloqueante
+      showToast('⚠️ Salvo só aqui por enquanto. Firebase bloqueado — arrume as regras.');
+    } else {
+      alert('Erro ao salvar. Tente novamente.');
+    }
     console.error(e);
   }
 
@@ -278,6 +299,20 @@ function showStorageIndicator() {
     el.className   = 'storage-ind storage-local';
     el.title       = 'Configure firebaseUrl em js/config.js para sincronizar com a Mari';
   }
+}
+
+/* ── Toast de aviso ─────────────────────────────── */
+function showToast(msg) {
+  let t = document.getElementById('letters-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'letters-toast';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 4000);
 }
 
 /* ── Eventos ─────────────────────────────────────── */

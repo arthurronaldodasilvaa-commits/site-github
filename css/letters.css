@@ -540,6 +540,32 @@ body {
 .btn-save:active  { transform: translateY(0); }
 .btn-save:disabled { opacity: .65; cursor: not-allowed; transform: none; }
 
+/* ── Toast de aviso ─────────────────────────────── */
+#letters-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(30,12,40,.95);
+  border: 1px solid rgba(255,120,120,.3);
+  color: rgba(255,200,200,.92);
+  font-family: var(--font-body);
+  font-size: .82rem;
+  padding: 12px 20px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 88vw;
+  opacity: 0;
+  transition: opacity .3s, transform .3s;
+  pointer-events: none;
+  z-index: 600;
+}
+
+#letters-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 /* ── Animações ───────────────────────────────────── */
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(.97); }
