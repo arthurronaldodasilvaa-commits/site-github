@@ -136,6 +136,15 @@ body {
 ::-webkit-scrollbar-track { background: var(--navy); }
 ::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 3px; }
 
+/* ===== Mobile tap: remove 300ms delay + highlight azul ===== */
+button, a, [role="button"], input, textarea, select, label {
+  touch-action: manipulation;
+}
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+* { -webkit-tap-highlight-color: transparent; }
+
 /* ===== Canvas de partículas (compartilhado) ===== */
 canvas.particles {
   position: fixed;

@@ -20,21 +20,28 @@ const WHEEL_OPTIONS = [
   { label: 'Surpresa 🎁',   color: '#ff6b9d' },
 ];
 
-/* ── Canvas ──────────────────────────────────────── */
+/* ── Canvas (HiDPI / Retina) ─────────────────────── */
 const canvas = document.getElementById('wheel-canvas');
 const ctx    = canvas.getContext('2d');
-const cx     = canvas.width / 2;
-const cy     = canvas.height / 2;
-const R      = Math.min(cx, cy) - 8;
-const N      = WHEEL_OPTIONS.length;
-const SLICE  = (2 * Math.PI) / N;
+const dpr    = window.devicePixelRatio || 1;
+const SIZE   = 320;
+canvas.width        = SIZE * dpr;
+canvas.height       = SIZE * dpr;
+canvas.style.width  = SIZE + 'px';
+canvas.style.height = SIZE + 'px';
+ctx.scale(dpr, dpr);
+const cx    = SIZE / 2;
+const cy    = SIZE / 2;
+const R     = SIZE / 2 - 8;
+const N     = WHEEL_OPTIONS.length;
+const SLICE = (2 * Math.PI) / N;
 
 let currentAngle = -Math.PI / 2; // ponteiro aponta pro topo
 let isSpinning   = false;
 
 /* ── Desenhar roleta ─────────────────────────────── */
 function drawWheel() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, SIZE, SIZE);
 
   for (let i = 0; i < N; i++) {
     const start = currentAngle + i * SLICE;

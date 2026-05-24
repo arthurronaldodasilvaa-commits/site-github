@@ -107,13 +107,17 @@ function initDust() {
   canvas.width  = window.innerWidth;
   canvas.height = window.innerHeight;
 
+  let rafId, resizeTimer;
+
   window.addEventListener('resize', () => {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-    drawStrings();
-    // Limpa as lâmpadas antigas antes de recriar
-    document.getElementById('lights').innerHTML = '';
-    createLights();
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+      drawStrings();
+      document.getElementById('lights').innerHTML = '';
+      createLights();
+    }, 150);
   });
 
   const particles = Array.from({ length: 60 }, () => ({
@@ -135,9 +139,15 @@ function initDust() {
       ctx.fillStyle = `rgba(255,183,197,${p.alpha})`;
       ctx.fill();
     });
-    requestAnimationFrame(draw);
+    rafId = requestAnimationFrame(draw);
   }
   draw();
+
+  // Pausa o loop quando a aba está oculta (economiza bateria)
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(rafId);
+    else draw();
+  });
 }
 
 // ── Fade-in ao carregar ───────────────────────────

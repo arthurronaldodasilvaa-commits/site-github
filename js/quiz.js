@@ -141,7 +141,8 @@ function initStars() {
   resize();
   window.addEventListener('resize', resize);
 
-  const stars = Array.from({ length: 130 }, () => ({
+  const count = window.innerWidth < 600 ? 70 : 130; // menos estrelas no mobile
+  const stars = Array.from({ length: count }, () => ({
     x:       Math.random() * window.innerWidth,
     y:       Math.random() * window.innerHeight,
     r:       Math.random() * 1.4 + 0.3,
@@ -149,6 +150,7 @@ function initStars() {
     speed:   Math.random() * 0.018 + 0.005,
   }));
 
+  let rafId;
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     stars.forEach(s => {
@@ -159,9 +161,15 @@ function initStars() {
       ctx.fillStyle = `rgba(255, 200, 230, ${alpha})`;
       ctx.fill();
     });
-    requestAnimationFrame(draw);
+    rafId = requestAnimationFrame(draw);
   }
   draw();
+
+  // Pausa o loop quando a aba está oculta (economiza bateria)
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(rafId);
+    else draw();
+  });
 }
 
 // ── Pétalas flutuantes ────────────────────────────

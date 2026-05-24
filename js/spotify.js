@@ -7,6 +7,17 @@ if (sessionStorage.getItem('quiz_passed') !== 'true') {
   window.location.replace('../index.html');
 }
 
+// ── Fallback se config.js não carregar ───────────
+if (!window.CONFIG) {
+  window.CONFIG = {
+    firstMet:           new Date(2026, 2, 28),
+    songs:              [],
+    spotifyMessages:    { intro: '', closing: '', quote: '' },
+    spotifyStats:       { minutesListened: 2026, topGenre: 'Amor', topMoment: '28 de Março' },
+    spotifyPlaylistLink: '#',
+  };
+}
+
 // ── Estado ────────────────────────────────────────
 let currentSlide = 0;
 const slides = document.querySelectorAll('.slide');
