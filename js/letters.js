@@ -6,13 +6,14 @@ if (sessionStorage.getItem('quiz_passed') !== 'true') {
   window.location.replace('../index.html');
 }
 
-/* ── Storage (Firebase ou localStorage) ─────────────
-   Se CONFIG.firebaseUrl estiver preenchido → Firebase (sincroniza entre celulares!)
-   Se não → localStorage (salva só neste dispositivo)
+/* ── Storage (Firebase) ──────────────────────────────
+   URL fixa do Firebase — não depende do config.js.
    ─────────────────────────────────────────────────── */
-const USE_FIREBASE = !!(window.CONFIG && CONFIG.firebaseUrl && CONFIG.firebaseUrl.trim() !== '');
+const _FB_BASE  = (window.CONFIG && CONFIG.firebaseUrl && CONFIG.firebaseUrl.trim())
+                  || 'https://projeto-mari-ca882-default-rtdb.firebaseio.com';
+const USE_FIREBASE = true;
 const LS_KEY       = 'shawty_letters_v2';
-const FB_URL       = USE_FIREBASE ? CONFIG.firebaseUrl.replace(/\/$/, '') + '/letters' : null;
+const FB_URL       = _FB_BASE.replace(/\/$/, '') + '/letters';
 
 let fbError = null; // guarda mensagem de erro do Firebase (null = sem erro)
 
@@ -409,20 +410,10 @@ async function debugInfo() {
   ].join(';');
   document.body.appendChild(el);
 
-  const cfgType    = typeof window.CONFIG;
-  const cfgUrl     = (window.CONFIG && window.CONFIG.firebaseUrl) || '(vazio/undefined)';
-  el.textContent   =
+  el.textContent =
     `USE_FIREBASE: ${USE_FIREBASE}\n` +
     `FB_URL: ${FB_URL}\n` +
-    `typeof CONFIG: ${cfgType}\n` +
-    `CONFIG.firebaseUrl: "${cfgUrl}"\n`;
-
-  if (!USE_FIREBASE) {
-    el.textContent += 'Firebase NÃO configurado → usando localStorage\n';
-    const local = localStorage.getItem(LS_KEY);
-    el.textContent += `localStorage["${LS_KEY}"]: ${local ? local.slice(0, 120) : 'vazio'}`;
-    return;
-  }
+    `typeof CONFIG: ${typeof window.CONFIG}\n`;
 
   try {
     el.textContent += 'Fazendo fetch...\n';
