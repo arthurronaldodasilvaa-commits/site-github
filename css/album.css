@@ -1,0 +1,492 @@
+/* ===========================
+   ALBUM — Nosso Álbum
+   =========================== */
+
+body {
+  background: #100a08;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Fundo ───────────────────────────────────────── */
+.album-ambient {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ab-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: .22;
+}
+
+.ab-blob-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, #8d6e63, transparent);
+  top: -200px; left: -100px;
+}
+
+.ab-blob-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, #ff6b9d, transparent);
+  bottom: -100px; right: -100px;
+}
+
+/* ── Header ──────────────────────────────────────── */
+.album-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px;
+  z-index: 200;
+  background: linear-gradient(180deg, rgba(16,10,8,.92) 0%, transparent 100%);
+}
+
+.btn-back {
+  color: rgba(255,255,255,.55);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: .9rem;
+  transition: color .2s;
+}
+
+.btn-back:hover { color: var(--pink); }
+
+.header-label {
+  font-family: var(--font-romantic);
+  font-size: 1.2rem;
+  color: rgba(255,200,160,.6);
+}
+
+/* ── Capa ────────────────────────────────────────── */
+.book-cover {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: opacity .5s ease;
+}
+
+.book-cover.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cover-content {
+  text-align: center;
+  padding: 60px 40px;
+  background: linear-gradient(160deg, #2a1408, #1a0c04);
+  border-radius: 6px 16px 16px 6px;
+  border: 1px solid rgba(141,110,99,.35);
+  box-shadow:
+    -8px 0 0 rgba(0,0,0,.6),
+    0 20px 60px rgba(0,0,0,.7),
+    inset 2px 0 0 rgba(255,255,255,.04);
+  min-width: 300px;
+  max-width: 420px;
+  position: relative;
+}
+
+.cover-flower {
+  font-size: 3.2rem;
+  display: block;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 16px rgba(255,107,157,.5));
+  animation: float 4s ease-in-out infinite;
+}
+
+.cover-title {
+  font-family: var(--font-romantic);
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  color: #f5d9c0;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.cover-names {
+  font-family: var(--font-romantic);
+  font-size: 1.25rem;
+  color: rgba(245,217,192,.65);
+  margin-bottom: 8px;
+}
+
+.cover-date {
+  font-family: var(--font-body);
+  font-size: .78rem;
+  color: rgba(245,217,192,.38);
+  letter-spacing: 2px;
+  margin-bottom: 36px;
+}
+
+.cover-open-btn {
+  background: linear-gradient(135deg, #ff6b9d, #c77dff);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 12px 32px;
+  font-family: var(--font-body);
+  font-size: .95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 4px 20px rgba(255,107,157,.35);
+}
+
+.cover-open-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(255,107,157,.5);
+}
+
+/* Detalhes de canto da capa */
+.cover-corner {
+  position: absolute;
+  width: 18px; height: 18px;
+  border-color: rgba(245,217,192,.25);
+  border-style: solid;
+}
+
+.cover-corner-tl { top: 14px; left: 18px; border-width: 1px 0 0 1px; }
+.cover-corner-tr { top: 14px; right: 18px; border-width: 1px 1px 0 0; }
+.cover-corner-bl { bottom: 14px; left: 18px; border-width: 0 0 1px 1px; }
+.cover-corner-br { bottom: 14px; right: 18px; border-width: 0 1px 1px 0; }
+
+/* ── Livro aberto ────────────────────────────────── */
+.book-wrapper {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px 20px;
+  min-height: 100vh;
+  transition: opacity .4s ease;
+}
+
+.book-wrapper.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.book {
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  border-radius: 4px 8px 8px 4px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.7);
+}
+
+/* ── Spread (duas páginas) ───────────────────────── */
+.spread-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px 8px 8px 4px;
+}
+
+.book-spread {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 520px;
+  position: relative;
+}
+
+/* Sombra da lombada */
+.book-spread::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 20px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg,
+    rgba(0,0,0,.25) 0%,
+    rgba(0,0,0,.08) 40%,
+    rgba(0,0,0,.08) 60%,
+    rgba(0,0,0,.25) 100%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── Transição entre spreads ─────────────────────── */
+.book-spread.slide-out-left {
+  animation: slideOutLeft .35s ease forwards;
+}
+
+.book-spread.slide-in-right {
+  animation: slideInRight .35s ease forwards;
+}
+
+.book-spread.slide-out-right {
+  animation: slideOutRight .35s ease forwards;
+}
+
+.book-spread.slide-in-left {
+  animation: slideInLeft .35s ease forwards;
+}
+
+@keyframes slideOutLeft {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-6%); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(6%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideOutRight {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(6%); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-6%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Página esquerda (foto) ──────────────────────── */
+.page-left {
+  background: #f7f0e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 28px;
+  border-radius: 4px 0 0 4px;
+  position: relative;
+}
+
+/* Linhas decorativas na margem esquerda */
+.page-left::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 48px;
+  width: 1px;
+  background: rgba(200,150,120,.2);
+}
+
+/* ── Polaroid ────────────────────────────────────── */
+.polaroid {
+  background: #ffffff;
+  padding: 12px 12px 40px;
+  box-shadow:
+    0 4px 16px rgba(0,0,0,.18),
+    0 1px 4px rgba(0,0,0,.12);
+  transform: rotate(-1.2deg);
+  max-width: 280px;
+  width: 100%;
+}
+
+.polaroid-photo {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #ede0d4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.polaroid-photo img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.polaroid-placeholder-icon {
+  font-size: 2.8rem;
+  opacity: .45;
+}
+
+.polaroid-placeholder-text {
+  font-family: var(--font-body);
+  font-size: .72rem;
+  color: rgba(0,0,0,.4);
+  text-align: center;
+  padding: 0 12px;
+  line-height: 1.5;
+}
+
+.polaroid-caption {
+  text-align: center;
+  margin-top: 10px;
+  font-family: var(--font-romantic);
+  font-size: .9rem;
+  color: #5a3a2a;
+  padding: 0 4px;
+  line-height: 1.3;
+}
+
+/* ── Página direita (texto) ──────────────────────── */
+.page-right {
+  background: #fdf8f0;
+  padding: 40px 36px 40px 68px;
+  border-radius: 0 8px 8px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Linhas de caderno */
+.page-right::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent,
+    transparent 31px,
+    rgba(180,140,100,.18) 31px,
+    rgba(180,140,100,.18) 32px
+  );
+  background-size: 100% 32px;
+  background-position: 0 0;
+  pointer-events: none;
+}
+
+/* Linha vermelha da margem esquerda */
+.page-right::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 58px;
+  width: 1px;
+  background: rgba(200,100,100,.2);
+}
+
+.page-chapter {
+  font-family: var(--font-romantic);
+  font-size: 1.6rem;
+  color: #3d2010;
+  line-height: 32px;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.page-decoration {
+  font-size: 1.4rem;
+  line-height: 32px;
+  margin-bottom: 0;
+  display: block;
+}
+
+.page-date {
+  font-family: var(--font-body);
+  font-size: .72rem;
+  color: rgba(80,40,20,.5);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.page-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.page-line {
+  font-family: var(--font-romantic);
+  font-size: 1.05rem;
+  color: rgba(50,25,10,.65);
+  line-height: 32px;
+}
+
+.page-line.placeholder {
+  color: rgba(80,50,20,.32);
+  font-style: italic;
+}
+
+/* ── Navegação ───────────────────────────────────── */
+.book-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 20px;
+  padding-bottom: 32px;
+}
+
+.nav-arrow {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.7);
+  font-size: 1.8rem;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background .2s, color .2s, transform .15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.nav-arrow:hover:not(:disabled) {
+  background: rgba(255,107,157,.18);
+  color: var(--pink-light);
+  transform: scale(1.1);
+}
+
+.nav-arrow:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.spread-counter {
+  font-family: var(--font-body);
+  font-size: .82rem;
+  color: rgba(255,255,255,.42);
+  letter-spacing: 1px;
+  min-width: 70px;
+  text-align: center;
+}
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 700px) {
+  .book-spread {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .page-left {
+    border-radius: 4px 4px 0 0;
+    padding: 28px 20px;
+  }
+
+  .page-right {
+    border-radius: 0 0 8px 8px;
+    padding: 28px 24px;
+    min-height: 340px;
+  }
+
+  .book-spread::after { display: none; }
+
+  .page-left::before { display: none; }
+
+  .polaroid { max-width: 220px; }
+}

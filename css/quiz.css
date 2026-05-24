@@ -1,0 +1,266 @@
+/* ===========================
+   QUIZ — Página de Entrada
+   =========================== */
+
+/* Fundo estrelado gerado por canvas no quiz.js */
+body {
+  background: radial-gradient(ellipse at 50% 0%, #2d1b69 0%, #1a1a2e 60%);
+}
+
+/* Pétalas flutuantes */
+.petals-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.petal {
+  position: absolute;
+  top: -30px;
+  font-size: 1.1rem;
+  animation: petalFall linear infinite;
+  opacity: .75;
+  user-select: none;
+}
+
+/* Container principal */
+.quiz-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  padding: 20px;
+}
+
+/* Cada "tela" do quiz */
+.quiz-screen {
+  position: absolute;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(30px);
+  pointer-events: none;
+  transition: opacity .5s ease, transform .5s cubic-bezier(.34,1.56,.64,1);
+}
+
+.quiz-screen.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+  position: relative; /* ocupa espaço no flow quando ativo */
+}
+
+.quiz-screen.exit {
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: opacity .4s ease, transform .4s ease;
+}
+
+/* ─── Cartão base ─── */
+.welcome-card,
+.question-card,
+.success-card {
+  background: rgba(255, 255, 255, .05);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 107, 157, .22);
+  border-radius: var(--radius-lg);
+  padding: 48px 40px;
+  width: 100%;
+  text-align: center;
+  box-shadow:
+    0 8px 60px rgba(0,0,0,.5),
+    0 0 40px rgba(255,107,157,.08),
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+/* ─── Tela de boas-vindas ─── */
+.heart-icon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 18px;
+  animation: heartbeat 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 16px rgba(255,107,157,.7));
+}
+
+.welcome-title {
+  font-family: var(--font-romantic);
+  font-size: 2.8rem;
+  color: var(--white);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.welcome-subtitle {
+  color: var(--pink-pale);
+  font-size: 1.05rem;
+  margin-bottom: 38px;
+  opacity: .85;
+}
+
+/* ─── Botões ─── */
+.btn-start,
+.btn-next {
+  background: linear-gradient(135deg, var(--pink), var(--purple));
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease;
+  box-shadow: 0 4px 20px rgba(255,107,157,.45);
+}
+
+.btn-start {
+  padding: 16px 44px;
+}
+
+.btn-next {
+  padding: 16px 44px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.btn-start:hover,
+.btn-next:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(255,107,157,.6);
+}
+
+.btn-start:active,
+.btn-next:active {
+  transform: translateY(0);
+}
+
+/* ─── Questão ─── */
+.question-number {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 22px;
+  font-size: 1.8rem;
+}
+
+.heart-filled { color: var(--pink); filter: drop-shadow(0 0 6px var(--pink)); }
+.heart-empty  { color: rgba(255,255,255,.18); }
+
+.question-icon {
+  font-size: 3rem;
+  margin-bottom: 14px;
+}
+
+.question-text {
+  font-family: var(--font-romantic);
+  font-size: 2.1rem;
+  color: var(--white);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.question-hint {
+  color: rgba(255,255,255,.45);
+  font-size: .88rem;
+  margin-bottom: 26px;
+}
+
+/* ─── Input ─── */
+.input-group { margin-bottom: 20px; }
+
+.answer-input {
+  width: 100%;
+  background: rgba(255,255,255,.08);
+  border: 2px solid rgba(255,107,157,.28);
+  border-radius: var(--radius-md);
+  padding: 15px 20px;
+  font-family: var(--font-body);
+  font-size: 1.35rem;
+  color: var(--white);
+  text-align: center;
+  letter-spacing: 2px;
+  outline: none;
+  transition: border-color .3s, box-shadow .3s, background .3s;
+}
+
+.answer-input::placeholder { color: rgba(255,255,255,.3); letter-spacing: 1px; }
+
+.answer-input:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px rgba(255,107,157,.15);
+  background: rgba(255,255,255,.11);
+}
+
+.answer-input.correct {
+  border-color: var(--green-ok);
+  box-shadow: 0 0 0 3px rgba(74,222,128,.15);
+}
+
+.answer-input.wrong {
+  border-color: var(--red-err);
+  box-shadow: 0 0 0 3px rgba(239,68,68,.15);
+  animation: shake .5s ease;
+}
+
+.input-feedback {
+  min-height: 22px;
+  margin-top: 8px;
+  font-size: .9rem;
+  font-weight: 700;
+  transition: all .3s ease;
+}
+
+.input-feedback.correct { color: var(--green-ok); }
+.input-feedback.wrong   { color: var(--red-err); }
+
+/* ─── Sucesso ─── */
+.success-icon {
+  font-size: 5rem;
+  display: block;
+  margin-bottom: 18px;
+  animation: bounceIn .7s ease forwards;
+  filter: drop-shadow(0 0 24px rgba(255,107,157,.8));
+}
+
+.success-title {
+  font-family: var(--font-romantic);
+  font-size: 2.6rem;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+
+.success-subtitle {
+  color: var(--pink-pale);
+  font-size: 1.05rem;
+  margin-bottom: 28px;
+}
+
+.loading-hearts {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  font-size: 1.6rem;
+}
+
+.loading-hearts span:nth-child(1) { animation: float 1s ease-in-out infinite; }
+.loading-hearts span:nth-child(2) { animation: float 1s ease-in-out .2s infinite; }
+.loading-hearts span:nth-child(3) { animation: float 1s ease-in-out .4s infinite; }
+
+/* ─── Responsivo ─── */
+@media (max-width: 480px) {
+  .welcome-card,
+  .question-card,
+  .success-card {
+    padding: 36px 24px;
+  }
+  .welcome-title   { font-size: 2.2rem; }
+  .question-text   { font-size: 1.7rem; }
+  .success-title   { font-size: 2.1rem; }
+}

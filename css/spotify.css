@@ -1,0 +1,460 @@
+/* ===========================
+   SPOTIFY — Retrospectiva do Amor
+   =========================== */
+
+body {
+  background: #121212;
+  overflow: hidden;
+}
+
+/* ── Barra de progresso (tipo stories) ───────────── */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 200;
+  background: rgba(255,255,255,.15);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink), var(--purple));
+  transition: width .45s ease;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ── Botão voltar ─────────────────────────────────── */
+.btn-back {
+  position: fixed;
+  top: 18px; left: 18px;
+  z-index: 200;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.15);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: .88rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background .2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-back:hover { background: rgba(255,255,255,.18); }
+
+/* ── Container de slides ─────────────────────────── */
+.slides-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Slide base ──────────────────────────────────── */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 32px 100px;
+  text-align: center;
+
+  /* Por padrão invisível */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .5s ease, transform .5s ease;
+  transform: translateX(60px);
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0);
+}
+
+.slide.exit-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity .4s ease, transform .4s ease;
+}
+
+/* ── Fundos de cada slide ────────────────────────── */
+.slide-1 { background: linear-gradient(160deg, #1a0a3e 0%, #3d0a5e 50%, #6b21a8 100%); }
+.slide-2 { background: linear-gradient(160deg, #05192d 0%, #0a3d62 50%, #1a6fa8 100%); }
+.slide-3 { background: linear-gradient(160deg, #003820 0%, #006b35 50%, #1db954 100%); }
+.slide-4 { background: linear-gradient(160deg, #0d0d1a 0%, #2d0a3d 60%, #1a0a2e 100%); }
+.slide-5 { background: linear-gradient(160deg, #1a0a0a 0%, #4a0e0e 50%, #7b1f1f 100%); }
+.slide-6 { background: linear-gradient(160deg, #ff6b9d 0%, #c77dff 50%, #6b9dff 100%); }
+.slide-7 { background: linear-gradient(160deg, #0a0a1a 0%, #0f1a4a 50%, #1a0a3e 100%); }
+.slide-8 { background: linear-gradient(160deg, #ff6b9d 0%, #ff8fab 40%, #ffb3c6 100%); }
+
+/* ── Elementos de conteúdo ───────────────────────── */
+
+/* Chip pequeno (ex: "2026") */
+.slide-chip {
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: var(--radius-full);
+  padding: 6px 18px;
+  font-family: var(--font-body);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.9);
+  margin-bottom: 24px;
+  animation: fadeIn .6s ease .1s both;
+}
+
+/* Emoji grande */
+.slide-emoji {
+  font-size: 5rem;
+  line-height: 1;
+  margin-bottom: 24px;
+  animation: bounceIn .7s ease both;
+  filter: drop-shadow(0 0 20px rgba(255,255,255,.3));
+}
+
+/* Título principal do slide */
+.slide-title {
+  font-family: var(--font-romantic);
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 14px;
+  animation: slideUp .6s ease .15s both;
+  text-shadow: 0 2px 20px rgba(0,0,0,.3);
+}
+
+/* Subtítulo */
+.slide-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(.95rem, 2.5vw, 1.2rem);
+  color: rgba(255,255,255,.8);
+  line-height: 1.6;
+  max-width: 480px;
+  animation: slideUp .6s ease .25s both;
+}
+
+/* Número grande em destaque */
+.slide-number {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 14vw, 8rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: .9;
+  margin: 12px 0;
+  animation: fadeInScale .7s ease both;
+  text-shadow: 0 0 40px rgba(255,255,255,.25);
+}
+
+.slide-number-label {
+  font-family: var(--font-body);
+  font-size: .9rem;
+  color: rgba(255,255,255,.65);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 6px;
+  animation: fadeIn .6s ease .3s both;
+}
+
+/* ── Grelha de estatísticas ───────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 20px;
+  animation: slideUp .7s ease .2s both;
+}
+
+.stat-card {
+  background: rgba(255,255,255,.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: var(--radius-md);
+  padding: 18px 12px;
+  text-align: center;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  display: block;
+}
+
+.stat-label {
+  font-family: var(--font-body);
+  font-size: .72rem;
+  color: rgba(255,255,255,.65);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
+  display: block;
+}
+
+/* ── Cards de música ─────────────────────────────── */
+.songs-list {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  animation: slideUp .6s ease .2s both;
+  max-height: 55vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.songs-list::-webkit-scrollbar { width: 3px; }
+.songs-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,.3); }
+
+.song-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  text-align: left;
+  transition: background .2s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.song-card:hover { background: rgba(255,255,255,.14); }
+
+.song-rank {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: rgba(255,255,255,.35);
+  min-width: 28px;
+  text-align: center;
+}
+
+.song-cover {
+  width: 44px; height: 44px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--pink), var(--purple));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.song-info { flex: 1; min-width: 0; }
+
+.song-title {
+  font-family: var(--font-body);
+  font-size: .95rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-artist {
+  font-family: var(--font-body);
+  font-size: .78rem;
+  color: rgba(255,255,255,.6);
+  margin-top: 2px;
+}
+
+.song-play {
+  font-size: 1.1rem;
+  opacity: .5;
+}
+
+/* Música destaque (Foi Assim) */
+.song-special {
+  border-color: rgba(255,107,157,.35) !important;
+  background: rgba(255,107,157,.1) !important;
+}
+
+.song-special:hover {
+  background: rgba(255,107,157,.18) !important;
+}
+
+.song-special .song-cover {
+  background: linear-gradient(135deg, var(--pink), var(--purple)) !important;
+}
+
+.song-badge {
+  color: var(--pink);
+  font-size: .75rem;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+/* ── Citação romântica ───────────────────────────── */
+.quote-text {
+  font-family: var(--font-romantic);
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  color: #fff;
+  line-height: 1.4;
+  max-width: 500px;
+  text-shadow: 0 2px 20px rgba(0,0,0,.25);
+  animation: fadeIn .8s ease .1s both;
+}
+
+.quote-author {
+  font-family: var(--font-body);
+  font-size: .88rem;
+  color: rgba(255,255,255,.7);
+  margin-top: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  animation: fadeIn .6s ease .4s both;
+}
+
+/* ── Mensagem final ───────────────────────────────── */
+.final-name {
+  font-family: var(--font-romantic);
+  font-size: clamp(3rem, 10vw, 6rem);
+  color: #fff;
+  line-height: 1;
+  text-shadow: 0 4px 30px rgba(0,0,0,.25);
+  animation: bounceIn .8s ease both;
+}
+
+.final-msg {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: rgba(255,255,255,.9);
+  max-width: 380px;
+  line-height: 1.7;
+  margin-top: 20px;
+  animation: slideUp .6s ease .3s both;
+}
+
+.final-from {
+  font-family: var(--font-romantic);
+  font-size: 1.5rem;
+  color: rgba(255,255,255,.85);
+  margin-top: 24px;
+  animation: fadeIn .6s ease .55s both;
+}
+
+.final-hearts {
+  font-size: 2rem;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 16px;
+  animation: fadeIn .6s ease .7s both;
+}
+
+.final-hearts span:nth-child(1) { animation: float 1.2s ease-in-out infinite; }
+.final-hearts span:nth-child(2) { animation: float 1.2s ease-in-out .2s infinite; }
+.final-hearts span:nth-child(3) { animation: float 1.2s ease-in-out .4s infinite; }
+
+/* ── Botão de playlist ────────────────────────────── */
+.playlist-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #1db954;
+  color: #000;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 14px 32px;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  margin-top: 24px;
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 4px 20px rgba(29,185,84,.4);
+  animation: slideUp .6s ease .4s both;
+}
+
+.playlist-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(29,185,84,.55);
+}
+
+/* ── Navegação (setas + pontos) ──────────────────── */
+.nav-prev,
+.nav-next {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 150;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  font-size: 1.3rem;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background .2s, transform .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.nav-prev { left: 16px; }
+.nav-next { right: 16px; }
+
+.nav-prev:hover,
+.nav-next:hover {
+  background: rgba(255,255,255,.2);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.nav-prev:disabled,
+.nav-next:disabled {
+  opacity: .25;
+  cursor: default;
+}
+
+/* Pontos de progresso */
+.nav-dots {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 150;
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.3);
+  cursor: pointer;
+  transition: background .3s, transform .3s, width .3s;
+  border: none;
+}
+
+.dot.active {
+  background: #fff;
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 540px) {
+  .slide { padding: 70px 20px 90px; }
+  .songs-list { max-height: 50vh; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .nav-prev { left: 8px; }
+  .nav-next { right: 8px; }
+}

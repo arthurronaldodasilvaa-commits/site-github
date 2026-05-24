@@ -1,0 +1,254 @@
+/* ===========================
+   TIMER — Tempo Juntos
+   =========================== */
+
+body {
+  background: #0d0715;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Blobs ambiente ─────────────────────────────── */
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: .3;
+}
+
+.blob-1 {
+  width: 550px; height: 550px;
+  background: radial-gradient(circle, #ff6b9d, transparent);
+  top: -180px; left: -120px;
+}
+
+.blob-2 {
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, #c77dff, transparent);
+  bottom: -120px; right: -100px;
+}
+
+.blob-3 {
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, #6b9dff, transparent);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: .15;
+}
+
+/* ── Header ─────────────────────────────────────── */
+.timer-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px;
+  z-index: 100;
+  background: linear-gradient(180deg, rgba(13,7,21,.9) 0%, transparent 100%);
+}
+
+.btn-back {
+  color: rgba(255,255,255,.6);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: .9rem;
+  letter-spacing: .3px;
+  transition: color .2s;
+}
+
+.btn-back:hover { color: var(--pink); }
+
+.header-label {
+  font-family: var(--font-romantic);
+  font-size: 1.2rem;
+  color: rgba(255,183,197,.65);
+}
+
+/* ── Hero ───────────────────────────────────────── */
+.timer-hero {
+  text-align: center;
+  padding: 110px 20px 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.timer-since-label {
+  font-family: var(--font-body);
+  font-size: .78rem;
+  color: rgba(255,255,255,.38);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+}
+
+.timer-start-date {
+  font-family: var(--font-romantic);
+  font-size: clamp(2rem, 5.5vw, 3.4rem);
+  color: var(--pink-light);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.timer-names {
+  font-family: var(--font-body);
+  font-size: .95rem;
+  color: rgba(255,255,255,.48);
+}
+
+/* ── Contadores ─────────────────────────────────── */
+.counters-section {
+  position: relative;
+  z-index: 1;
+  padding: 0 20px 48px;
+}
+
+.counters-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.counter-card {
+  flex: 1 1 140px;
+  max-width: 190px;
+  min-width: 120px;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius-md);
+  padding: 22px 10px 16px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+}
+
+.counter-card.accent {
+  background: rgba(255,107,157,.08);
+  border-color: rgba(255,107,157,.18);
+}
+
+.counter-card.pulse-card {
+  background: rgba(199,125,255,.1);
+  border-color: rgba(199,125,255,.28);
+  animation: heartbeat 1s ease-in-out infinite;
+}
+
+.counter-number {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.8vw, 2.6rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 10px;
+  transition: color .3s;
+}
+
+.counter-card.accent .counter-number   { color: var(--pink-light); }
+.counter-card.pulse-card .counter-number { color: var(--purple); }
+
+.counter-unit {
+  font-family: var(--font-body);
+  font-size: .68rem;
+  color: rgba(255,255,255,.4);
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+}
+
+/* ── Milestones ─────────────────────────────────── */
+.milestones-section {
+  position: relative;
+  z-index: 1;
+  max-width: 580px;
+  margin: 0 auto 70px;
+  padding: 0 20px;
+}
+
+.milestones-heading {
+  font-family: var(--font-romantic);
+  font-size: 1.65rem;
+  color: rgba(255,183,197,.75);
+  text-align: center;
+  font-weight: 400;
+  margin-bottom: 22px;
+}
+
+.milestone-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 18px;
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.06);
+  margin-bottom: 8px;
+}
+
+.milestone-item.reached {
+  background: rgba(74,222,128,.05);
+  border-color: rgba(74,222,128,.2);
+}
+
+.milestone-icon {
+  font-size: 1.05rem;
+  min-width: 20px;
+  text-align: center;
+}
+
+.milestone-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.milestone-label {
+  font-family: var(--font-body);
+  font-size: .88rem;
+  color: rgba(255,255,255,.82);
+  font-weight: 600;
+}
+
+.milestone-item.reached .milestone-label {
+  color: var(--green-ok);
+}
+
+.milestone-date {
+  font-family: var(--font-body);
+  font-size: .72rem;
+  color: rgba(255,255,255,.35);
+}
+
+.milestone-countdown {
+  font-family: var(--font-body);
+  font-size: .76rem;
+  color: rgba(255,255,255,.4);
+  white-space: nowrap;
+}
+
+.milestone-item.reached .milestone-countdown {
+  color: var(--green-ok);
+  font-weight: 700;
+}
+
+/* ── Responsive ─────────────────────────────────── */
+@media (max-width: 500px) {
+  .counter-card {
+    flex: 1 1 100px;
+    min-width: 100px;
+    padding: 18px 8px 12px;
+  }
+
+  .milestones-section {
+    padding: 0 12px;
+  }
+}

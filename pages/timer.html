@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⏱️ Tempo Juntos — Arthur &amp; Mariana</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/timer.css" />
+</head>
+<body>
+
+  <div class="ambient-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <header class="timer-header">
+    <a class="btn-back" href="../board.html">← voltar</a>
+    <span class="header-label">nosso tempo</span>
+  </header>
+
+  <section class="timer-hero">
+    <p class="timer-since-label">desde</p>
+    <h1 class="timer-start-date">28 de Março de 2026</h1>
+    <p class="timer-names">Arthur &amp; Mariana 💕</p>
+  </section>
+
+  <section class="counters-section">
+    <div class="counters-grid">
+      <div class="counter-card">
+        <span class="counter-number" id="n-anos">0</span>
+        <span class="counter-unit">anos</span>
+      </div>
+      <div class="counter-card">
+        <span class="counter-number" id="n-meses">0</span>
+        <span class="counter-unit">meses</span>
+      </div>
+      <div class="counter-card">
+        <span class="counter-number" id="n-semanas">0</span>
+        <span class="counter-unit">semanas</span>
+      </div>
+      <div class="counter-card">
+        <span class="counter-number" id="n-dias">0</span>
+        <span class="counter-unit">dias</span>
+      </div>
+      <div class="counter-card accent">
+        <span class="counter-number" id="n-horas">0</span>
+        <span class="counter-unit">horas</span>
+      </div>
+      <div class="counter-card accent">
+        <span class="counter-number" id="n-minutos">0</span>
+        <span class="counter-unit">minutos</span>
+      </div>
+      <div class="counter-card accent pulse-card">
+        <span class="counter-number" id="n-segundos">0</span>
+        <span class="counter-unit">segundos</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="milestones-section">
+    <h2 class="milestones-heading">próximos marcos 🌸</h2>
+    <div class="milestones-list" id="milestones-list"></div>
+  </section>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/timer.js"></script>
+</body>
+</html>

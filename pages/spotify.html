@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎵 Retrospectiva do Amor</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/spotify.css" />
+</head>
+<body>
+
+  <!-- Barra de progresso (stories style) -->
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+
+  <!-- Botão voltar pro board -->
+  <a class="btn-back" href="../board.html">← voltar</a>
+
+  <!-- Setas de navegação -->
+  <button class="nav-prev" id="btn-prev" onclick="prevSlide()" aria-label="Anterior">‹</button>
+  <button class="nav-next" id="btn-next" onclick="nextSlide()" aria-label="Próximo">›</button>
+
+  <!-- Pontos de progresso -->
+  <div class="nav-dots">
+    <button class="dot active"></button>
+    <button class="dot"></button>
+    <button class="dot"></button>
+    <button class="dot"></button>
+    <button class="dot"></button>
+    <button class="dot"></button>
+    <button class="dot"></button>
+    <button class="dot"></button>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SLIDES
+  ════════════════════════════════════ -->
+  <div class="slides-wrapper">
+
+    <!-- ── SLIDE 1 · Intro ── -->
+    <div class="slide slide-1 active">
+      <div class="slide-chip">2026</div>
+      <div class="slide-emoji">💕</div>
+      <h1 class="slide-title">Retrospectiva<br>do Amor</h1>
+      <p class="slide-subtitle">
+        Esse ano teve de tudo...<br>
+        mas você foi a melhor parte.
+      </p>
+    </div>
+
+    <!-- ── SLIDE 2 · Quando tudo começou ── -->
+    <div class="slide slide-2">
+      <div class="slide-chip">o começo</div>
+      <div class="slide-emoji">🌟</div>
+      <h2 class="slide-title">Quando tudo<br>começou...</h2>
+      <div class="slide-number" id="days-count">–</div>
+      <p class="slide-number-label">dias que você mudou minha vida</p>
+      <p class="slide-subtitle" style="margin-top:20px">
+        Desde <strong id="first-met-date">28 de Março de 2026</strong>
+      </p>
+    </div>
+
+    <!-- ── SLIDE 3 · Playlist stats ── -->
+    <div class="slide slide-3">
+      <div class="slide-chip">playlist</div>
+      <div class="slide-emoji">🎵</div>
+      <h2 class="slide-title">Vocês ouviram<br>juntos...</h2>
+      <div class="slide-number">∞</div>
+      <p class="slide-number-label">músicas que marcaram</p>
+      <a
+        class="playlist-btn"
+        href="../js/config.js"
+        id="playlist-link"
+        target="_blank"
+        rel="noopener"
+        style="display:none"
+      >
+        ▶ Ouvir playlist
+      </a>
+    </div>
+
+    <!-- ── SLIDE 4 · Top músicas ── -->
+    <div class="slide slide-4">
+      <div class="slide-chip">top músicas</div>
+      <h2 class="slide-title" style="margin-bottom:0">Suas favoritas 🎶</h2>
+      <div class="songs-list" id="songs-list">
+        <!-- Renderizado por spotify.js -->
+      </div>
+    </div>
+
+    <!-- ── SLIDE 5 · Momento especial ── -->
+    <div class="slide slide-5">
+      <div class="slide-chip">momento especial</div>
+      <div class="slide-emoji">✨</div>
+      <h2 class="slide-title">O dia que<br>mudou tudo</h2>
+      <p class="slide-subtitle">
+        28 de Março de 2026 —<br>
+        o universo resolveu nos apresentar. 🌌
+      </p>
+    </div>
+
+    <!-- ── SLIDE 6 · Citação ── -->
+    <div class="slide slide-6">
+      <div class="slide-emoji" style="font-size:3rem">🌸</div>
+      <p class="quote-text">
+        "Das coisas boas<br>
+        que me aconteceram,<br>
+        você foi a que eu menos esperava<br>
+        e a que mais gostei."
+      </p>
+      <p class="quote-author">— Arthur, pra Mari</p>
+    </div>
+
+    <!-- ── SLIDE 7 · Estatísticas ── -->
+    <div class="slide slide-7">
+      <div class="slide-chip">em números</div>
+      <div class="slide-emoji">⏱️</div>
+      <h2 class="slide-title">Cada segundo<br>conta 💕</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-value" id="s-weeks">–</span>
+          <span class="stat-label">semanas</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="s-hours">–</span>
+          <span class="stat-label">horas</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="s-minutes">–</span>
+          <span class="stat-label">minutos</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="s-seconds">–</span>
+          <span class="stat-label">segundos</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SLIDE 8 · Final ── -->
+    <div class="slide slide-8">
+      <div class="slide-emoji" style="font-size:3.5rem">🌷</div>
+      <p class="final-name">Mari</p>
+      <p class="final-msg">
+        Obrigado por existir, por sorrir, por ser tudo isso
+        que você é. Esse espacinho foi feito com muito carinho
+        pra você. 💕
+      </p>
+      <p class="final-from">— com amor, Arthur 🌸</p>
+      <div class="final-hearts">
+        <span>💕</span>
+        <span>💗</span>
+        <span>💓</span>
+      </div>
+    </div>
+
+  </div><!-- /slides-wrapper -->
+
+  <script src="../js/config.js"></script>
+  <script src="../js/spotify.js"></script>
+
+  <script>
+    // Atualiza o link da playlist se estiver configurado
+    window.addEventListener('load', () => {
+      const btn = document.getElementById('playlist-link');
+      if (btn && CONFIG.spotifyPlaylistLink && CONFIG.spotifyPlaylistLink !== '#') {
+        btn.href = CONFIG.spotifyPlaylistLink;
+        btn.style.display = 'inline-flex';
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💕 Shawty — Board</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/board.css" />
+</head>
+<body>
+
+  <!-- ── Varalzinho de luzes (topo) ── -->
+  <div class="string-lights-bar">
+    <div class="string-wire"></div>
+    <div id="lights"></div>
+  </div>
+
+  <!-- ── SVG das cordas (desenhado por JS) ── -->
+  <svg id="strings-svg" class="strings-layer"></svg>
+
+  <!-- ── Título discreto ── -->
+  <div class="board-header">
+    <h1>nosso cantinho 🌸</h1>
+  </div>
+
+  <!-- ── Board com os cartões ── -->
+  <div class="board" id="board">
+
+    <!-- Cartão título (centro, não clicável) -->
+    <div
+      class="board-card title-card"
+      id="card-title"
+      style="--x:40%;--y:9%;--rot:-1.5deg"
+    >
+      <div class="card-pin"></div>
+      <div class="card-photo title-card-photo">
+        <div class="card-emoji">💕</div>
+        <p class="card-title-text">Arthur &amp; Mariana</p>
+        <p class="card-date">28 · 03 · 2026</p>
+      </div>
+      <div class="card-label">nosso álbum</div>
+    </div>
+
+    <!-- 🎵 Spotify / Retrospectiva -->
+    <div
+      class="board-card"
+      id="card-spotify"
+      style="--x:11%;--y:33%;--rot:2.5deg;--swing-delay:0s"
+      onclick="navigate('pages/spotify.html')"
+      role="button"
+      tabindex="0"
+      aria-label="Abrir Retrospectiva Spotify"
+    >
+      <div class="card-pin"></div>
+      <div class="card-photo">
+        <div class="card-emoji">🎵</div>
+        <p class="card-name">Retrospectiva</p>
+        <p class="card-desc">Nossa história em música</p>
+      </div>
+      <div class="card-label">Spotify</div>
+    </div>
+
+    <!-- 🌷 Foi Assim — música especial -->
+    <div
+      class="board-card card-foi-assim"
+      id="card-foiassim"
+      style="--x:13%;--y:59%;--rot:-2deg;--swing-delay:.6s"
+      onclick="navigate('pages/foi-assim.html')"
+      role="button"
+      tabindex="0"
+      aria-label="Abrir Foi Assim"
+    >
+      <div class="card-pin card-pin--purple"></div>
+      <div class="card-photo card-photo--dark">
+        <div class="card-emoji">🌷</div>
+        <p class="card-name" style="color:#e8d5ff">Foi Assim</p>
+        <p class="card-desc" style="color:rgba(232,213,255,.7)">Sotam · letra nossa</p>
+      </div>
+      <div class="card-label" style="color:#9b5de5">nossa música</div>
+    </div>
+
+    <!-- 📸 Álbum de polaroides -->
+    <div
+      class="board-card"
+      id="card-album"
+      style="--x:37%;--y:46%;--rot:-3deg;--swing-delay:.8s"
+      onclick="navigate('pages/album.html')"
+      role="button"
+      tabindex="0"
+      aria-label="Abrir Álbum de Polaroides"
+    >
+      <div class="card-pin"></div>
+      <div class="card-photo">
+        <div class="card-emoji">📸</div>
+        <p class="card-name">Álbum</p>
+        <p class="card-desc">Memórias eternizadas</p>
+      </div>
+      <div class="card-label">Polaroides</div>
+    </div>
+
+    <!-- ⏱️ Timer -->
+    <div
+      class="board-card"
+      id="card-timer"
+      style="--x:67%;--y:37%;--rot:1.8deg;--swing-delay:1.5s"
+      onclick="navigate('pages/timer.html')"
+      role="button"
+      tabindex="0"
+      aria-label="Abrir Tempo Juntos"
+    >
+      <div class="card-pin"></div>
+      <div class="card-photo">
+        <div class="card-emoji">⏱️</div>
+        <p class="card-name">Tempo Juntos</p>
+        <p class="card-desc">Cada segundo conta</p>
+      </div>
+      <div class="card-label">Timer</div>
+    </div>
+
+    <!-- 💌 Cartinhas -->
+    <div
+      class="board-card"
+      id="card-letters"
+      style="--x:32%;--y:72%;--rot:-2.2deg;--swing-delay:.4s"
+      onclick="navigate('pages/letters.html')"
+      role="button"
+      tabindex="0"
+      aria-label="Abrir Cartinhas"
+    >
+      <div class="card-pin"></div>
+      <div class="card-photo">
+        <div class="card-emoji">💌</div>
+        <p class="card-name">Cartinhas</p>
+        <p class="card-desc">Palavras do coração</p>
+      </div>
+      <div class="card-label">Digitais</div>
+    </div>
+
+    <!-- 🎲 Jogos -->
+    <div
+      class="board-card"
+      id="card-games"
+      style="--x:62%;--y:68%;--rot:2.8deg;--swing-delay:1.1s"
+      onclick="navigate('pages/games.html')"
+      role="button"
+      tabindex="0"
+      aria-label="Abrir Jogos"
+    >
+      <div class="card-pin"></div>
+      <div class="card-photo">
+        <div class="card-emoji">🎲</div>
+        <p class="card-name">Jogos</p>
+        <p class="card-desc">Roleta de date e mais</p>
+      </div>
+      <div class="card-label">Diversão</div>
+    </div>
+
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/board.js"></script>
+</body>
+</html>

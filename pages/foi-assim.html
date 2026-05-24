@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎵 Foi Assim — Arthur & Mariana</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/foi-assim.css" />
+</head>
+<body>
+
+  <!-- Blobs de cor no fundo (efeito ambient do Spotify) -->
+  <div class="ambient-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- ── Header ── -->
+  <header class="player-header">
+    <a class="btn-back" href="../board.html">← voltar</a>
+    <div class="header-right">
+      <button class="icon-btn btn-like" onclick="toggleLike()" title="Curtir">♡</button>
+      <button class="icon-btn" title="Compartilhar">↗</button>
+    </div>
+  </header>
+
+  <!-- ── Layout principal ── -->
+  <main class="player-main">
+
+    <!-- ════ PAINEL ESQUERDO — Player ════ -->
+    <section class="player-left">
+
+      <!-- Arte do álbum -->
+      <div class="album-art">
+        <video class="album-cover-img" loop muted playsinline preload="auto">
+          <source src="../assets/imagens/nossas-fotos/foi assim capa.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      <!-- Informações da música -->
+      <div class="song-info">
+        <h1 class="song-title">Foi Assim</h1>
+        <p class="song-artist">Sotam</p>
+      </div>
+
+      <!-- Ações: like, +, share -->
+      <div class="song-actions">
+        <button class="action-btn btn-like" onclick="toggleLike()" title="Curtir" style="font-size:1.4rem">♡</button>
+        <button class="action-btn" title="Adicionar à playlist">＋</button>
+        <div class="spacer"></div>
+        <button class="action-btn" title="Créditos" onclick="showView('credits')">📜</button>
+        <button class="action-btn" title="Compartilhar">↗</button>
+      </div>
+
+      <!-- Barra de progresso -->
+      <div class="progress-area">
+        <div class="progress-track" id="prog-track" onclick="seekTo(event)">
+          <div class="progress-fill"  id="prog-fill"></div>
+          <div class="progress-thumb" id="prog-thumb"></div>
+        </div>
+        <div class="progress-times">
+          <span id="time-current">0:00</span>
+          <span id="time-total">–:––</span>
+        </div>
+      </div>
+
+      <!-- Controles de player -->
+      <div class="controls">
+        <button class="ctrl-btn" title="Aleatório" onclick="seekToTime(0)">🔀</button>
+        <button class="ctrl-btn" title="Voltar 5s"  onclick="seekToTime(currentTime - 5)">⏮</button>
+        <button class="ctrl-btn play-btn" id="play-btn" onclick="togglePlay()">▶</button>
+        <button class="ctrl-btn" title="Avançar 5s" onclick="seekToTime(currentTime + 5)">⏭</button>
+        <button class="ctrl-btn" title="Repetir">🔁</button>
+      </div>
+
+      <!-- Toggle Letra / Créditos -->
+      <div class="view-toggle">
+        <button class="toggle-btn active" id="btn-lyrics"  onclick="showView('lyrics')">Letra</button>
+        <button class="toggle-btn"        id="btn-credits" onclick="showView('credits')">Créditos</button>
+      </div>
+
+    </section>
+
+    <!-- ════ PAINEL DIREITO — Letra ════ -->
+    <section class="side-panel" id="panel-lyrics">
+      <span class="lyrics-label">🎵 Letra</span>
+      <div id="lyrics-body">
+        <!-- Preenchido por foi-assim.js -->
+      </div>
+    </section>
+
+    <!-- ════ PAINEL DIREITO — Créditos ════ -->
+    <section class="side-panel hidden" id="panel-credits">
+      <span class="credits-header">📜 Créditos</span>
+
+      <div class="credit-item">
+        <span class="credit-role">Música original</span>
+        <span class="credit-name">Sotam — "Foi Assim"</span>
+      </div>
+      <div class="credit-item">
+        <span class="credit-role">Inspiração</span>
+        <span class="credit-name">16/05/2026</span>
+      </div>
+      <div class="credit-item">
+        <span class="credit-role">Álbum</span>
+        <span class="credit-name">Nosso Álbum</span>
+      </div>
+      <div class="credit-item">
+        <span class="credit-role">Dedicatória</span>
+        <span class="credit-name">Pra você, Mari 🌷</span>
+      </div>
+      <div class="credit-item">
+        <span class="credit-role">Gênero</span>
+        <span class="credit-name">Amor</span>
+      </div>
+      <div class="credit-item">
+        <span class="credit-role">Duração</span>
+        <span class="credit-name">2:27</span>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!--
+    ÁUDIO REAL — Coloque o arquivo MP3 em assets/foi-assim.mp3
+    O player detecta automaticamente se o arquivo existe.
+    Enquanto não tiver o MP3, o karaokê funciona com timer interno.
+  -->
+  <audio id="song-audio" preload="auto">
+    <source src="../assets/mp3/Foi assim.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/foi-assim.js"></script>
+
+
+</body>
+</html>

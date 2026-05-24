@@ -1,0 +1,333 @@
+/* ===========================
+   BOARD — Quadro Criminal
+   =========================== */
+
+body {
+  background: #120a10;
+  overflow: hidden;
+}
+
+/* ── Luzes de varalzinho ─────────────────────────── */
+.string-lights-bar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 58px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.string-wire {
+  position: absolute;
+  top: 12px; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(160,110,60,.55) 4%,
+    rgba(160,110,60,.55) 96%,
+    transparent 100%);
+}
+
+.light-bulb {
+  position: absolute;
+  top: 8px;
+  width: 13px;
+  height: 17px;
+  border-radius: 50% 50% 50% 50% / 58% 58% 42% 42%;
+  box-shadow: 0 0 10px var(--bulb-color), 0 0 22px var(--bulb-color);
+  animation: twinkle var(--dur, 2s) ease-in-out var(--delay, 0s) infinite;
+}
+
+/* Cabo da lâmpada */
+.light-bulb::before {
+  content: '';
+  position: absolute;
+  top: -6px; left: 3px;
+  width: 7px; height: 6px;
+  background: rgba(140,90,40,.65);
+  border-radius: 3px 3px 0 0;
+}
+
+/* ── SVG layer das cordas ────────────────────────── */
+.strings-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10;
+  overflow: visible;
+}
+
+/* ── Board principal ─────────────────────────────── */
+.board {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Textura de fundo sutil */
+.board::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 22% 35%, rgba(139,50,70,.14) 0%, transparent 45%),
+    radial-gradient(ellipse at 78% 72%, rgba(199,125,255,.07) 0%, transparent 42%),
+    radial-gradient(ellipse at 55% 55%, rgba(20,8,18,.9) 0%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Título do board (topo esquerdo) */
+.board-header {
+  position: fixed;
+  top: 70px; left: 24px;
+  z-index: 90;
+  pointer-events: none;
+}
+
+.board-header h1 {
+  font-family: var(--font-romantic);
+  font-size: 1.5rem;
+  color: rgba(255,183,197,.55);
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+/* ── Cartão (polaroid) ───────────────────────────── */
+.board-card {
+  position: absolute;
+  left: var(--x, 50%);
+  top:  var(--y, 50%);
+  transform: translate(-50%, 0) rotate(var(--rot, 0deg));
+  width: 168px;
+  background: #fdf6f0;
+  border-radius: 3px;
+  padding: 13px 13px 8px;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow:
+    0 4px 18px rgba(0,0,0,.55),
+    0 1px 4px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.8);
+  transition:
+    transform .3s cubic-bezier(.34,1.56,.64,1),
+    box-shadow .3s ease,
+    z-index 0s;
+  will-change: transform;
+  user-select: none;
+}
+
+.board-card:not(.title-card) {
+  animation: ropeSwing 5s ease-in-out infinite;
+  animation-delay: var(--swing-delay, 0s);
+}
+
+.board-card:not(.title-card):hover {
+  transform: translate(-50%, -10px) rotate(calc(var(--rot, 0deg) * .25)) scale(1.07);
+  box-shadow:
+    0 18px 50px rgba(0,0,0,.65),
+    0 0 24px rgba(255,107,157,.22);
+  z-index: 60;
+  animation-play-state: paused;
+}
+
+.board-card:not(.title-card):active {
+  transform: translate(-50%, -5px) rotate(var(--rot, 0deg)) scale(1.03);
+}
+
+/* Title card não tem hover clicável */
+.title-card { cursor: default; }
+
+/* ── Alfinete ─────────────────────────────────────── */
+.card-pin {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 32%, #ff8fab, #c2185b);
+  box-shadow:
+    0 2px 6px rgba(0,0,0,.55),
+    inset 0 1px 3px rgba(255,255,255,.35);
+  z-index: 30;
+}
+
+/* Haste do alfinete */
+.card-pin::after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 8px;
+  background: linear-gradient(180deg, #999, #555);
+  border-radius: 0 0 2px 2px;
+}
+
+/* ── Área de foto (topo do polaroid) ─────────────── */
+.card-photo {
+  position: relative;
+  width: 100%;
+  background: #ede0d8;
+  border-radius: 2px;
+  min-height: 128px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.title-card-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("../assets/imagens/nossas-fotos/a&m%20nosso%20album.jpeg") center / cover no-repeat;
+  opacity: .72;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.title-card-photo .card-emoji,
+.title-card-photo .card-title-text,
+.title-card-photo .card-date {
+  position: relative;
+  z-index: 1;
+}
+
+.title-card-photo .card-title-text {
+  color: #100508;
+  font-weight: 700;
+}
+
+.title-card-photo .card-date {
+  color: #b5003f;
+  font-weight: 900;
+}
+
+.card-emoji {
+  font-size: 2.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.15));
+}
+
+.card-name,
+.card-title-text {
+  font-family: var(--font-romantic);
+  font-size: 1.1rem;
+  color: #3d1a2a;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.card-title-text {
+  font-size: 1.25rem;
+}
+
+.card-desc {
+  font-family: var(--font-body);
+  font-size: .68rem;
+  color: #7a4a5a;
+  text-align: center;
+  opacity: .9;
+  padding: 0 4px;
+}
+
+.card-date {
+  font-family: var(--font-body);
+  font-size: .75rem;
+  color: var(--pink);
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* ── Label (parte branca do polaroid) ─────────────── */
+.card-label {
+  text-align: center;
+  padding-top: 9px;
+  font-family: var(--font-romantic);
+  font-size: 1rem;
+  color: #5a3040;
+  letter-spacing: .4px;
+}
+
+/* ── Card especial "Foi Assim" ────────────────────── */
+.card-foi-assim {
+  background: linear-gradient(145deg, #1a0a2e, #2d1060) !important;
+  box-shadow:
+    0 4px 18px rgba(0,0,0,.6),
+    0 0 16px rgba(155,93,229,.3) !important;
+}
+
+.card-foi-assim:hover {
+  box-shadow:
+    0 18px 50px rgba(0,0,0,.65),
+    0 0 30px rgba(199,125,255,.4) !important;
+}
+
+.card-photo--dark {
+  background: rgba(255,255,255,.06) !important;
+}
+
+.card-pin--purple {
+  background: radial-gradient(circle at 36% 32%, #c77dff, #7b2fbe) !important;
+}
+
+/* ── "Em breve" badge ─────────────────────────────── */
+.badge-soon {
+  position: absolute;
+  top: 8px; right: 8px;
+  background: rgba(199,125,255,.85);
+  color: #fff;
+  font-size: .58rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+/* ── Responsive mobile ────────────────────────────── */
+@media (max-width: 768px) {
+  body { overflow-y: auto; }
+
+  .board {
+    position: static;
+    height: auto;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 80px 16px 50px;
+    align-items: start;
+    justify-items: center;
+  }
+
+  .board::before { display: none; }
+  .strings-layer  { display: none; }
+
+  .board-card {
+    position: static;
+    transform: rotate(var(--rot, 0deg)) !important;
+    animation: none !important;
+    width: 100%;
+    max-width: 160px;
+  }
+
+  .board-card:not(.title-card):hover {
+    transform: rotate(0) scale(1.05) !important;
+  }
+
+  .title-card {
+    grid-column: 1 / -1;
+    max-width: 200px;
+  }
+}

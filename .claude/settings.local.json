@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:lovepanda.com.br)",
+      "Bash(mkdir -p \"E:/shawty/.claude\" && echo done)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(Get-ChildItem \"E:\\\\shawty\\\\assets\\\\imagens\\\\nossas-fotos\")",
+      "Bash(Select-Object Name, Length)",
+      "PowerShell(Get-ChildItem \"E:\\\\shawty\\\\assets\\\\imagens\\\\nossas-fotos\" | Where-Object { $_.Name -match \"\\\\.\\(jpeg|jpg|png\\)$\" } | Select-Object Name | Sort-Object Name)",
+      "Bash(dir /B \"E:\\\\shawty\\\\assets\\\\imagens\")",
+      "Bash(dir /B \"E:\\\\shawty\\\\assets\\\\imagens\\\\nossas-fotos\")",
+      "Bash(findstr /i \"foi assim capa\")"
+    ]
+  }
+}

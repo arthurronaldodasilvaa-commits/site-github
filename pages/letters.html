@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💌 Cartinhas — Arthur &amp; Mariana</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/letters.css" />
+</head>
+<body>
+
+  <div class="letters-ambient">
+    <div class="lb-blob lb-blob-1"></div>
+    <div class="lb-blob lb-blob-2"></div>
+  </div>
+
+  <header class="letters-header">
+    <a class="btn-back" href="../board.html">← voltar</a>
+    <span class="header-label">cartinhas</span>
+  </header>
+
+  <!-- Área de cartas (renderizada por JS) -->
+  <main class="letters-main" id="letters-main">
+    <!-- Preenchido por letters.js -->
+  </main>
+
+  <!-- Modal de carta aberta -->
+  <div class="letter-modal hidden" id="letter-modal">
+    <div class="letter-paper">
+      <button class="modal-close" onclick="closeLetter()">✕</button>
+      <div class="letter-inner" id="letter-inner"></div>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/letters.js"></script>
+</body>
+</html>

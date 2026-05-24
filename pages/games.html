@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎲 Jogos — Arthur &amp; Mariana</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/games.css" />
+</head>
+<body>
+
+  <div class="games-ambient">
+    <div class="gb-blob gb-blob-1"></div>
+    <div class="gb-blob gb-blob-2"></div>
+    <div class="gb-blob gb-blob-3"></div>
+  </div>
+
+  <header class="games-header">
+    <a class="btn-back" href="../board.html">← voltar</a>
+    <span class="header-label">jogos</span>
+  </header>
+
+  <main class="games-main">
+
+    <!-- ── Roleta de Date ── -->
+    <section class="game-section">
+      <h2 class="game-title">Roleta de Date 🎰</h2>
+      <p class="game-subtitle">Gira a roleta e deixa o destino decidir!</p>
+
+      <div class="wheel-wrapper">
+        <!-- Ponteiro -->
+        <div class="wheel-pointer">▼</div>
+
+        <div class="wheel-container">
+          <canvas id="wheel-canvas" width="320" height="320"></canvas>
+        </div>
+      </div>
+
+      <button class="spin-btn" id="spin-btn" onclick="spin()">Girar! 🎲</button>
+    </section>
+
+  </main>
+
+  <!-- Modal de resultado -->
+  <div class="result-modal hidden" id="result-modal">
+    <div class="result-card">
+      <p class="result-label">Hoje vocês vão...</p>
+      <p class="result-text" id="result-text"></p>
+      <button class="result-btn" onclick="closeResult()">Boa sorte! 💕</button>
+      <button class="result-again" onclick="closeResult(); spin()">Girar de novo</button>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/games.js"></script>
+</body>
+</html>

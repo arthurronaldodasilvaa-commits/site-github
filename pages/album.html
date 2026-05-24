@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📸 Nosso Álbum — Arthur &amp; Mariana</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/album.css" />
+</head>
+<body>
+
+  <!-- Fundo ambiente -->
+  <div class="album-ambient">
+    <div class="ab-blob ab-blob-1"></div>
+    <div class="ab-blob ab-blob-2"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="album-header">
+    <a class="btn-back" href="../board.html">← voltar</a>
+    <span class="header-label">nosso álbum</span>
+  </header>
+
+  <!-- ── Capa ── -->
+  <div class="book-cover" id="book-cover">
+    <div class="cover-content">
+      <span class="cover-flower">🌷</span>
+      <h1 class="cover-title">Nosso Álbum</h1>
+      <p class="cover-names">Arthur &amp; Mariana</p>
+      <p class="cover-date">desde 28 · 03 · 2026</p>
+      <button class="cover-open-btn" onclick="openBook()">Abrir o álbum ›</button>
+    </div>
+    <div class="cover-corner cover-corner-tl"></div>
+    <div class="cover-corner cover-corner-tr"></div>
+    <div class="cover-corner cover-corner-bl"></div>
+    <div class="cover-corner cover-corner-br"></div>
+  </div>
+
+  <!-- ── Livro aberto ── -->
+  <div class="book-wrapper hidden" id="book-wrapper">
+
+    <div class="book" id="book">
+      <!-- Spread rendizado por JS -->
+      <div class="spread-container" id="spread-container"></div>
+    </div>
+
+    <!-- Navegação -->
+    <div class="book-nav">
+      <button class="nav-arrow" id="btn-prev" onclick="prevSpread()">‹</button>
+      <span class="spread-counter" id="spread-counter">1 de 6</span>
+      <button class="nav-arrow" id="btn-next" onclick="nextSpread()">›</button>
+    </div>
+
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/photos.js"></script>
+  <script src="../js/album.js"></script>
+</body>
+</html>
