@@ -57,6 +57,7 @@ body {
   padding: 0 24px;
   z-index: 100;
   background: linear-gradient(180deg, rgba(10,10,15,.95) 0%, transparent 100%);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
@@ -522,4 +523,13 @@ body {
   }
 
   .lyric-line { font-size: 1.3rem; }
+
+  /* Barra de progresso mais fácil de tocar */
+  .progress-track          { height: 6px; }
+  .progress-track:hover    { height: 8px; }
+  .progress-thumb          { width: 16px; height: 16px; }
+
+  /* Botões de controle — área de toque mínima de 44px */
+  .ctrl-btn { padding: 12px; }
+  .play-btn { width: 56px; height: 56px; }
 }

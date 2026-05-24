@@ -210,7 +210,7 @@ function seekToTime(sec) {
   currentTime   = Math.max(0, Math.min(sec, totalDuration));
   lastTimestamp = null;
 
-  if (audioEl && audioReady) audioEl.currentTime = currentTime;
+  if (audioEl) audioEl.currentTime = currentTime;
 
   updateProgress(currentTime);
 }

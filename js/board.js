@@ -109,6 +109,8 @@ function initDust() {
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
     drawStrings();
+    // Limpa as lâmpadas antigas antes de recriar
+    document.getElementById('lights').innerHTML = '';
     createLights();
   });
 
@@ -147,5 +149,4 @@ window.addEventListener('load', () => {
   initDust();
 });
 
-// Redesenha cordas se a janela mudar de tamanho
-window.addEventListener('resize', drawStrings);
+// Resize já é tratado dentro de initDust()

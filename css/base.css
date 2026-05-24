@@ -121,8 +121,8 @@ body {
 }
 
 @keyframes ropeSwing {
-  0%, 100% { transform-origin: top center; transform: rotate(-1.5deg); }
-  50%       { transform-origin: top center; transform: rotate(1.5deg); }
+  0%, 100% { transform: translate(-50%, 0) rotate(-1.5deg); }
+  50%       { transform: translate(-50%, 0) rotate(1.5deg); }
 }
 
 @keyframes gradientShift {

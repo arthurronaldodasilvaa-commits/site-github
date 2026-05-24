@@ -133,6 +133,8 @@ body {
 #wheel-canvas {
   display: block;
   border-radius: 50%;
+  max-width: 100%;
+  height: auto;
 }
 
 /* ── Botão girar ─────────────────────────────────── */

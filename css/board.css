@@ -123,6 +123,7 @@ body {
 .board-card:not(.title-card) {
   animation: ropeSwing 5s ease-in-out infinite;
   animation-delay: var(--swing-delay, 0s);
+  transform-origin: top center;
 }
 
 .board-card:not(.title-card):hover {
