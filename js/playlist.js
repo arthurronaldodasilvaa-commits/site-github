@@ -106,8 +106,9 @@ function loadSong(idx) {
       timeTotal.textContent = fmt(totalDuration);
     }
   };
-  audioEl.addEventListener('loadedmetadata', onMeta);
-  audioEl.addEventListener('canplay',        onMeta);
+  // { once: true } evita acúmulo de listeners ao trocar de música
+  audioEl.addEventListener('loadedmetadata', onMeta, { once: true });
+  audioEl.addEventListener('canplay',        onMeta, { once: true });
 
   updateProgress(0);
   renderSongList();
@@ -223,6 +224,15 @@ document.addEventListener('keydown', e => {
   if (e.key === ' ')          { e.preventDefault(); togglePlay(); }
   if (e.key === 'ArrowRight') seekToTime(currentTime + 5);
   if (e.key === 'ArrowLeft')  seekToTime(Math.max(0, currentTime - 5));
+});
+
+/* ── Fim natural da música ───────────────────────── */
+audioEl.addEventListener('ended', () => {
+  pausePlayer();
+  updateProgress(totalDuration);
+  // Avança para próxima música automaticamente (loop circular)
+  const next = (currentSong + 1) % SONGS.length;
+  setTimeout(() => { loadSong(next); playPlayer(); }, 800);
 });
 
 /* ── Init ────────────────────────────────────────── */

@@ -65,7 +65,7 @@ const CONFIG = {
   //   3. Realtime Database → "Criar banco de dados" → Modo de teste
   //   4. Copie a URL (ex.: https://shawty-12345-default-rtdb.firebaseio.com)
   //   5. Cole abaixo, sem "/" no final
-  firebaseUrl: '', // ← Cole aqui a URL do Firebase
+  firebaseUrl: 'https://projeto-mari-ca882-default-rtdb.firebaseio.com', // Firebase ativo ✓
 
   // ── Memórias / momentos especiais ─────────────────
   // Aparecem na timeline do Spotify e no álbum.
