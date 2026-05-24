@@ -25,23 +25,91 @@ async function storageGet() {
 
       // Firebase retorna { "error": "..." } quando as regras bloqueiam acesso
       if (data && data.error) {
-        fbError = 'Regras bloqueadas no Firebase. Vá em: Firebase Console → Realtime Database → Rules e mude ".read" e ".write" para true.';
-        return { mariToArthur: {}, arthurToMari: {} };
+        fbError = 'Regras bloqueadas no Firebase.';
+        // Mostra pelo menos as cartas locais enquanto Firebase está bloqueado
+        return JSON.parse(localStorage.getItem(LS_KEY)) ||
+               { mariToArthur: {}, arthurToMari: {} };
       }
 
       fbError = null;
-      return data && typeof data === 'object'
+      const fbData = (data && typeof data === 'object')
         ? data
         : { mariToArthur: {}, arthurToMari: {} };
+
+      // Faz upload das cartas pendentes (escritas enquanto Firebase estava bloqueado)
+      await flushPendingLetters(fbData);
+
+      // Lê novamente do Firebase após o flush para ter dados atualizados
+      const r2    = await fetch(FB_URL + '.json');
+      const data2 = await r2.json();
+      return (data2 && typeof data2 === 'object' && !data2.error)
+        ? data2
+        : fbData;
+
     } catch (e) {
-      fbError = 'Sem conexão com Firebase: ' + e.message;
-      return { mariToArthur: {}, arthurToMari: {} };
+      fbError = 'Sem conexão com Firebase.';
+      return JSON.parse(localStorage.getItem(LS_KEY)) ||
+             { mariToArthur: {}, arthurToMari: {} };
     }
   }
   try {
     return JSON.parse(localStorage.getItem(LS_KEY)) ||
            { mariToArthur: {}, arthurToMari: {} };
   } catch { return { mariToArthur: {}, arthurToMari: {} }; }
+}
+
+/* ── Envia cartas pendentes do localStorage ao Firebase ── */
+async function flushPendingLetters(fbData) {
+  let local;
+  try { local = JSON.parse(localStorage.getItem(LS_KEY)); } catch { return; }
+  if (!local) return;
+
+  const envelopes = ['mariToArthur', 'arthurToMari'];
+  let flushed = false;
+
+  for (const env of envelopes) {
+    if (!local[env]) continue;
+    for (const [key, letter] of Object.entries(local[env])) {
+      if (!letter._pendingSync) continue;
+
+      // Verifica se já existe no Firebase (evita duplicata)
+      const fbEnv = fbData[env] || {};
+      const alreadyExists = Object.values(fbEnv).some(
+        l => l.title === letter.title && l.createdAt === letter.createdAt
+      );
+      if (alreadyExists) {
+        delete local[env][key];
+        flushed = true;
+        continue;
+      }
+
+      // Envia para o Firebase
+      try {
+        const { _pendingSync, ...clean } = letter;
+        const r = await fetch(`${FB_URL}/${env}.json`, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(clean),
+        });
+        if (r.ok) {
+          delete local[env][key]; // remove do localStorage após sync
+          flushed = true;
+        }
+      } catch { /* mantém no localStorage se falhar */ }
+    }
+  }
+
+  if (flushed) {
+    // Limpa o localStorage se ficou vazio
+    const hasRemaining = envelopes.some(env =>
+      local[env] && Object.keys(local[env]).length > 0
+    );
+    if (hasRemaining) {
+      localStorage.setItem(LS_KEY, JSON.stringify(local));
+    } else {
+      localStorage.removeItem(LS_KEY);
+    }
+  }
 }
 
 /* ── storageAdd ──────────────────────────────────── */
