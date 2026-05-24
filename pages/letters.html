@@ -9,30 +9,114 @@
 </head>
 <body>
 
+  <!-- Fundo -->
   <div class="letters-ambient">
     <div class="lb-blob lb-blob-1"></div>
     <div class="lb-blob lb-blob-2"></div>
+    <div class="flor-bg"></div>
   </div>
 
+  <!-- Header -->
   <header class="letters-header">
     <a class="btn-back" href="../board.html">← voltar</a>
-    <span class="header-label">cartinhas</span>
+    <span class="header-label">cartinhas 💌</span>
+    <span class="storage-ind" id="storage-indicator"></span>
   </header>
 
-  <!-- Área de cartas (renderizada por JS) -->
-  <main class="letters-main" id="letters-main">
-    <!-- Preenchido por letters.js -->
+  <!-- Conteúdo -->
+  <main class="letters-main">
+
+    <!-- Botão central de escrever -->
+    <div class="write-center">
+      <button class="btn-write" onclick="openWrite()">✍️ Escrever Cartinha</button>
+    </div>
+
+    <!-- Dois envelopes -->
+    <div class="envelopes-grid">
+
+      <!-- Esquerdo: Mari → Arthur -->
+      <div class="envelope-col">
+        <div class="envelope-header">
+          <span class="envelope-icon">🌷</span>
+          <div>
+            <p class="envelope-from">Da Mari</p>
+            <p class="envelope-to">para o Arthur</p>
+          </div>
+          <span class="envelope-count" id="count-mari">0</span>
+        </div>
+        <div class="letters-list" id="list-mari"></div>
+      </div>
+
+      <!-- Direito: Arthur → Mari -->
+      <div class="envelope-col envelope-col--right">
+        <div class="envelope-header envelope-header--right">
+          <span class="envelope-count" id="count-arthur">0</span>
+          <div style="text-align:right">
+            <p class="envelope-from">Do Arthur</p>
+            <p class="envelope-to">para a Mari</p>
+          </div>
+          <span class="envelope-icon">🌸</span>
+        </div>
+        <div class="letters-list" id="list-arthur"></div>
+      </div>
+
+    </div>
+
   </main>
 
-  <!-- Modal de carta aberta -->
-  <div class="letter-modal hidden" id="letter-modal">
+  <!-- Modal: Ler carta -->
+  <div class="letter-modal hidden" id="modal-read">
     <div class="letter-paper">
-      <button class="modal-close" onclick="closeLetter()">✕</button>
-      <div class="letter-inner" id="letter-inner"></div>
+      <button class="modal-close" onclick="closeRead()">✕</button>
+      <p  class="read-from"  id="read-from"></p>
+      <h2 class="read-title" id="read-title"></h2>
+      <p  class="read-date"  id="read-date"></p>
+      <div class="read-divider"></div>
+      <div class="letter-inner" id="read-content"></div>
+    </div>
+  </div>
+
+  <!-- Modal: Escrever carta -->
+  <div class="letter-modal hidden" id="modal-write">
+    <div class="write-paper">
+      <button class="modal-close write-close" onclick="closeWrite()">✕</button>
+      <h2 class="write-heading">Nova Cartinha 💌</h2>
+
+      <label class="field-label">De quem é?</label>
+      <div class="from-selector">
+        <button class="from-btn active" id="from-arthur-btn" onclick="setFrom('arthur')">🌸 Arthur</button>
+        <button class="from-btn"        id="from-mari-btn"   onclick="setFrom('mari')">🌷 Mari</button>
+      </div>
+
+      <label class="field-label" for="form-title">Título</label>
+      <input
+        type="text"
+        id="form-title"
+        class="write-input"
+        placeholder="Ex: Te amo muito..."
+        maxlength="80"
+        autocomplete="off"
+      />
+
+      <label class="field-label" for="form-date">Data</label>
+      <input type="date" id="form-date" class="write-input" />
+
+      <label class="field-label" for="form-content">Cartinha</label>
+      <textarea
+        id="form-content"
+        class="write-textarea"
+        placeholder="Escreva do fundo do coração... 💕"
+        rows="7"
+      ></textarea>
+
+      <button class="btn-save" id="btn-save" onclick="saveLetter()">
+        Guardar Cartinha 💌
+      </button>
     </div>
   </div>
 
   <script src="../js/config.js"></script>
   <script src="../js/letters.js"></script>
+
 </body>
 </html>

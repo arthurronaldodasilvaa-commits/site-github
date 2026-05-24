@@ -56,7 +56,16 @@ const CONFIG = {
   ],
 
   // ── Link da playlist no Spotify (opcional) ─────────
-  spotifyPlaylistLink: '#',
+  spotifyPlaylistLink: 'https://open.spotify.com/playlist/37i9dQZF1EJtxr2qucxD1r?si=e8ec6f91d9d34d73',
+
+  // ── Firebase Realtime Database (Cartinhas) ─────────
+  // Para as cartas sincronizarem entre o celular da Mari e o seu:
+  //   1. Acesse: console.firebase.google.com
+  //   2. "Criar projeto" → nome: shawty
+  //   3. Realtime Database → "Criar banco de dados" → Modo de teste
+  //   4. Copie a URL (ex.: https://shawty-12345-default-rtdb.firebaseio.com)
+  //   5. Cole abaixo, sem "/" no final
+  firebaseUrl: '', // ← Cole aqui a URL do Firebase
 
   // ── Memórias / momentos especiais ─────────────────
   // Aparecem na timeline do Spotify e no álbum.

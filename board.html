@@ -161,6 +161,26 @@
       <div class="card-label">Diversão</div>
     </div>
 
+    <!-- 🎶 Nossa Playlist -->
+    <div
+      class="board-card card-foi-assim"
+      id="card-playlist"
+      style="--x:84%;--y:14%;--rot:-1.5deg;--swing-delay:.3s"
+      onclick="navigate('pages/playlist.html')"
+      onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('pages/playlist.html')}"
+      role="button"
+      tabindex="0"
+      aria-label="Abrir Nossa Playlist"
+    >
+      <div class="card-pin card-pin--purple"></div>
+      <div class="card-photo card-photo--dark">
+        <div class="card-emoji">🎶</div>
+        <p class="card-name" style="color:#e8d5ff">Nossa Playlist</p>
+        <p class="card-desc" style="color:rgba(232,213,255,.7)">3 músicas especiais</p>
+      </div>
+      <div class="card-label" style="color:#9b5de5">pra nós dois</div>
+    </div>
+
   </div>
 
   <script src="js/config.js"></script>

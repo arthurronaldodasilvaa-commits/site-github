@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎵 Nossa Playlist — Arthur &amp; Mariana</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/playlist.css" />
+</head>
+<body>
+
+  <!-- Fundo ambient -->
+  <div class="ambient-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="playlist-header">
+    <a class="btn-back" href="../board.html">← voltar</a>
+    <span class="header-title">Nossa Playlist 🎵</span>
+    <div style="width:80px"></div>
+  </header>
+
+  <!-- Layout principal -->
+  <main class="playlist-main">
+
+    <!-- ════ ESQUERDO — Player ════ -->
+    <section class="player-side">
+
+      <!-- Cover da música -->
+      <div class="album-art" id="album-art"></div>
+
+      <!-- Info -->
+      <div class="song-info">
+        <h1 class="song-title"  id="song-title">—</h1>
+        <p  class="song-artist" id="song-artist">—</p>
+      </div>
+
+      <!-- Link letra completa (só para Foi Assim) -->
+      <a class="full-page-link hidden" id="full-page-link" href="foi-assim.html">
+        🎵 Ver letra completa →
+      </a>
+
+      <!-- Progresso -->
+      <div class="progress-area">
+        <div class="progress-track" id="prog-track" onclick="seekTo(event)">
+          <div class="progress-fill"  id="prog-fill"></div>
+          <div class="progress-thumb" id="prog-thumb"></div>
+        </div>
+        <div class="progress-times">
+          <span id="time-current">0:00</span>
+          <span id="time-total">–:––</span>
+        </div>
+      </div>
+
+      <!-- Controles -->
+      <div class="controls">
+        <button class="ctrl-btn" title="Voltar 5s"  onclick="seekToTime(currentTime - 5)">⏮</button>
+        <button class="ctrl-btn play-btn" id="play-btn" onclick="togglePlay()">▶</button>
+        <button class="ctrl-btn" title="Avançar 5s" onclick="seekToTime(currentTime + 5)">⏭</button>
+      </div>
+
+    </section>
+
+    <!-- ════ DIREITO — Lista ════ -->
+    <section class="songs-side" id="songs-list">
+      <span class="songs-side-label">🎶 Músicas</span>
+      <!-- Renderizado por playlist.js -->
+    </section>
+
+  </main>
+
+  <audio id="song-audio" preload="auto"></audio>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/playlist.js"></script>
+
+</body>
+</html>

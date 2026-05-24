@@ -48,12 +48,14 @@ function createLights() {
 const CONNECTIONS = [
   ['card-title',    'card-spotify',   '#ff6b9d', 1.8],
   ['card-title',    'card-timer',     '#ff6b9d', 1.8],
-  ['card-spotify',  'card-foiassim',  '#c77dff', 1.5], // Spotify → Foi Assim
+  ['card-spotify',  'card-foiassim',  '#c77dff', 1.5],
   ['card-spotify',  'card-album',     '#c77dff', 1.4],
   ['card-album',    'card-letters',   '#ff8fab', 1.4],
   ['card-timer',    'card-games',     '#6b9dff', 1.4],
   ['card-album',    'card-games',     '#ffb3c6', 1.2],
   ['card-title',    'card-letters',   '#c77dff', 1.1],
+  ['card-title',    'card-playlist',  '#9b5de5', 1.6],
+  ['card-foiassim', 'card-playlist',  '#c77dff', 1.2],
 ];
 
 // Droop: quanto a corda "afunda" no meio (simula gravidade)
