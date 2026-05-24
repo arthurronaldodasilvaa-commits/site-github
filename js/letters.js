@@ -70,7 +70,8 @@ async function flushPendingLetters(fbData) {
   for (const env of envelopes) {
     if (!local[env]) continue;
     for (const [key, letter] of Object.entries(local[env])) {
-      if (!letter._pendingSync) continue;
+      // Sincroniza TODAS as cartas locais (com ou sem _pendingSync)
+      // Isso migra cartas antigas escritas antes do Firebase ser configurado
 
       // Verifica se já existe no Firebase (evita duplicata)
       const fbEnv = fbData[env] || {};
