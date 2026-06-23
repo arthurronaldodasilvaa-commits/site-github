@@ -12,25 +12,25 @@ const DAYS = [
     date:  new Date(2026, 5, 25),   // quinta, 25/06
     label: 'Quinta · 25/06',
     emoji: '💌',
-    audio: '../assets/mp3/viagem-dia-1.mp3',
+    audio: '../assets/viagem-dia-1.m4a',
   },
   {
     date:  new Date(2026, 5, 26),   // sexta, 26/06
     label: 'Sexta · 26/06',
     emoji: '💕',
-    audio: '../assets/mp3/viagem-dia-2.mp3',
+    audio: '../assets/viagem-dia-2.m4a',
   },
   {
     date:  new Date(2026, 5, 27),   // sábado, 27/06
     label: 'Sábado · 27/06',
     emoji: '🌷',
-    audio: '../assets/mp3/viagem-dia-3.mp3',
+    audio: '../assets/viagem-dia-3.m4a',
   },
   {
     date:  new Date(2026, 5, 28),   // domingo, 28/06
     label: 'Domingo · 28/06',
     emoji: '💖',
-    audio: '../assets/mp3/viagem-dia-4.mp3',
+    audio: '../assets/viagem-dia-4.m4a',
   },
 ];
 
