@@ -56,6 +56,7 @@ const CONNECTIONS = [
   ['card-title',    'card-letters',   '#c77dff', 1.1],
   ['card-title',    'card-playlist',  '#9b5de5', 1.6],
   ['card-foiassim', 'card-playlist',  '#c77dff', 1.2],
+  ['card-playlist', 'card-viagem',    '#9b5de5', 1.2],
 ];
 
 // Droop: quanto a corda "afunda" no meio (simula gravidade)
