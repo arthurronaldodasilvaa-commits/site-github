@@ -6,6 +6,9 @@ if (sessionStorage.getItem('quiz_passed') !== 'true') {
   window.location.replace('../index.html');
 }
 
+// ?test=1 na URL desbloqueia tudo (para testar antes da viagem)
+const TEST_MODE = new URLSearchParams(location.search).get('test') === '1';
+
 // ── Dias da viagem (25–28 de junho) ──────────────
 const DAYS = [
   {
@@ -41,6 +44,7 @@ function startOfDay(date) {
 }
 
 function isUnlocked(day) {
+  if (TEST_MODE) return true;
   return new Date() >= startOfDay(day.date);
 }
 
@@ -135,6 +139,13 @@ function buildCard(day, idx) {
     audio.addEventListener('loadedmetadata', setDur, { once: true });
     audio.addEventListener('canplay',        setDur, { once: true });
     audio.addEventListener('ended', () => pauseDay(idx));
+
+    audio.addEventListener('error', () => {
+      const btn = document.getElementById(`play-${idx}`);
+      const dur = document.getElementById(`dur-${idx}`);
+      if (btn) { btn.disabled = true; btn.style.opacity = '.3'; }
+      if (dur) dur.textContent = 'em breve…';
+    }, { once: true });
   });
 
   return card;
